@@ -11,7 +11,13 @@ Full documentation can be found at: http://godoc.org/github.com/adrg/go-wkhtmlto
 ## Installation
     go get github.com/adrg/go-wkhtmltopdf
 
+Alternatively, you may want to clone this repository if you're running a OS other than Windows or a more up to date version of wkhtmltopdf, since the wkhtmltox library shipped here is actually a DLL, version 0.12.4.
+
+In this case, we've got a How To waiting you down this page. Keep going.
+
 ## Usage
+
+We encourage you to check examples folder out to build and run this very example. You gotta enjoy it yourself.
 
 ```go
 package main
@@ -35,6 +41,7 @@ func main() {
 	}
 	object.SetOption("header.center", "This is the header of the first page")
 	object.SetOption("footer.right", "[page]")
+	object.SetOption("load.windowStatus", "ready")
 
 	// Create object from url
 	object2, err := pdf.NewObject("https://google.com")
@@ -78,9 +85,49 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(string(output))
+	err = ioutil.WriteFile("example.pdf", output, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 ```
+
+## How to install, build and run the shipped example
+
+Even though this is a very simple process, we've got a Makefile to help us do it over and over without much typing.
+
+### 1: Clone this repo
+	git clone https://github.com/adrg/go-wkhtmltopdf.git
+
+Great! Thanks for cloning. Now go ahead and change to the project directory.
+
+	cd go-wkhtmltopdf
+
+### 2: Bring in your own wkhtmltox library
+
+If you want to bring in your wkhtmltox library, just copy the files to the **./wkhtmltox** directory and your are good to go.
+
+### 3: Setup Makefile
+	PKG_SRC_PATH := $(GOPATH)/src/github.com/adrg/go-wkhtmltopdf
+
+What you want to do is to set this variable to your actual $GOPATH and package source path as well. This depends on the repository you cloned.
+
+### 4: Install this package
+	make install
+
+This is going to copy this directory to your $GOPATH source structure and **go install** it, making it available to your own programs to use it.
+
+### 5: Build the example
+	make build-example
+
+As result of this command you going to get a **run-example.exe** file in the example directory.
+
+### 6: Finally, run the example
+	make run-example
+
+Instead of this command, you can simply change to **./example** directory and fire **./run-example.exe**, which is going to result in the **example.pdf** file.
+
+Voilà!
 
 ## Conversion options
 
@@ -117,6 +164,7 @@ func main() {
 - load.username                Username to use for logging into a website (e.g. bart)
 - load.password                Password to use for logging into a website (e.g. elbarto)
 - load.jsdelay                 Milliseconds to wait after page load before print start (e.g. 1200)
+- load.windowStatus            Wait until window.status is equal to this string before rendering page
 - load.zoomFactor              Zoom of the content (e.g. 2.2)
 - load.blockLocalFileAccess    Block local files from accessing other local files (values: true, false)
 - load.stopSlowScript          Stop slow running javascript (values: true, false)

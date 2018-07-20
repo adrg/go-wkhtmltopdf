@@ -1,3 +1,5 @@
+package pdf
+
 /*
 Implements wkhtmltopdf Go bindings. It can be used to convert HTML documents to PDFs.
 The package does not use the wkhtmltopdf binary. Instead, it uses the wkhtmltox library directly.
@@ -100,6 +102,7 @@ Object options
     - load.username                     Username to use for logging into a website (e.g. bart)
     - load.password                     Password to use for logging into a website (e.g. elbarto)
     - load.jsdelay                      Amount of time in milliseconds to wait after page load before print start (e.g. 1200)
+    - load.windowStatus                 Wait until window.status is equal to this string before rendering page
     - load.zoomFactor                   Zoom of the content (e.g. 2.2)
     - load.blockLocalFileAccess         Disallow local and piped files to access other local files (values: true, false)
     - load.stopSlowScript               Stop slow running javascript (values: true, false)
@@ -154,10 +157,9 @@ Object options
 
 For more information see http://wkhtmltopdf.org/usage/wkhtmltopdf.txt
 */
-package pdf
 
 /*
-#cgo LDFLAGS: -lwkhtmltox
+#cgo LDFLAGS: -L${SRCDIR}/wkhtmltox -lwkhtmltox
 #include <stdlib.h>
 #include <wkhtmltox/pdf.h>
 */

@@ -1,7 +1,7 @@
 package pdf
 
 /*
-#cgo LDFLAGS: -lwkhtmltox
+#cgo LDFLAGS: -L${SRCDIR}/wkhtmltox -lwkhtmltox
 #include <stdio.h>
 #include <stdlib.h>
 #include <wkhtmltox/pdf.h>

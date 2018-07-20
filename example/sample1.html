@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>Sample Page 1</title>
+</head>
+<body>
+    <h1>Sample Page 1</h1>
+    <h2 id="htwo"></h2>
+    
+    <script>
+        var start = Date.now();
+        setTimeout(function () {
+            var end = Date.now();
+            document.getElementById("htwo").innerText = "Boooom! After " + (end-start)/1000 + " secs waiting";
+            window.status = "ready";
+        }, 15 * 1000);
+    </script>
+</body>
+</html>
