@@ -64,7 +64,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = ioutil.WriteFile("example.pdf", output, 0644)
+	err = ioutil.WriteFile("ex1.pdf", output, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}

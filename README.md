@@ -13,11 +13,11 @@ Full documentation can be found at: http://godoc.org/github.com/adrg/go-wkhtmlto
 
 Alternatively, you may want to clone this repository if you're running a OS other than Windows or a more up to date version of wkhtmltopdf, since the wkhtmltox library shipped here is actually a DLL, version 0.12.4.
 
-In this case, we've got a How To waiting you down this page. Keep going.
+In this case, we've got a **How To** waiting for you down this page. Keep going.
 
 ## Usage
 
-We encourage you to check examples folder out to build and run this very example. You gotta enjoy it yourself.
+We encourage you to check **examples** folder out to build and run this very example (i.e. ex1). You gotta enjoy it yourself, don't you?
 
 ```go
 package main
@@ -85,14 +85,14 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = ioutil.WriteFile("example.pdf", output, 0644)
+	err = ioutil.WriteFile("ex1.pdf", output, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 ```
 
-## How to install, build and run the shipped example
+## How to install, build and run those shipped examples
 
 Even though this is a very simple process, we've got a Makefile to help us do it over and over without much typing.
 
@@ -105,7 +105,7 @@ Great! Thanks for cloning. Now go ahead and change to the project directory.
 
 ### 2: Bring in your own wkhtmltox library
 
-If you want to bring in your wkhtmltox library, just copy the files to the **./wkhtmltox** directory and your are good to go.
+If you want to bring in your wkhtmltox library, just copy the files to the **./wkhtmltox** directory and you are good to go. Otherwise, skip this step.
 
 ### 3: Setup Makefile
 	PKG_SRC_PATH := $(GOPATH)/src/github.com/adrg/go-wkhtmltopdf
@@ -117,17 +117,22 @@ What you want to do is to set this variable to your actual $GOPATH and package s
 
 This is going to copy this directory to your $GOPATH source structure and **go install** it, making it available to your own programs to use it.
 
-### 5: Build the example
-	make build-example
+### 5: Build the example 1
+	cd ./examples/ex1
+	make build
 
-As result of this command you going to get a **run-example.exe** file in the example directory.
+As result of this command you going to get a **ex1.exe** file in ths very directory.
 
-### 6: Finally, run the example
-	make run-example
+### 6: Finally, run it
+	make run
 
-Instead of this command, you can simply change to **./example** directory and fire **./run-example.exe**, which is going to result in the **example.pdf** file.
+Instead of this command, you can simply fire **./ex1.exe**, which is going to result in the **example.pdf** file.
 
 Voilà!
+
+### What's next?
+
+If you have enjoyed the process up to here, you may want to go thru steps 5 and 6 but for ex2 this time now.
 
 ## Conversion options
 
