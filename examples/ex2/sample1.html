@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Sample Page 1</title>
+</head>
+<body>
+    <h1>Sample Page 1</h1>
+    <h2 id="htwo"></h2>
+    <h3 id="wtime"></h3>
+
+    <script>
+        var start = Date.now();
+        setTimeout(function () {
+            var end = Date.now();
+            document.getElementById("htwo").innerText = "Boooom! After " + (end-start)/1000 + " secs waiting";
+            document.getElementById("wtime").innerText = Date.now()
+            window.status = "ready";
+        }, 5 * 1000);
+    </script>
+</body>
+</html>
