@@ -5,16 +5,61 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"sync"
 )
 
-var mutex = &sync.Mutex{}
-
-// Options encapsulates wkhtmltopdf's converter and object options
-type Options struct {
+// ConvertOptions encapsulates wkhtmltopdf's converter and object options
+type ConvertOptions struct {
 	URL              string            `json:"url"`
 	ConverterOptions map[string]string `json:"converterOptions"`
 	ObjectOptions    map[string]string `json:"objectOptions"`
+}
+
+// ConvertRequestChannel receives request for convertion
+var ConvertRequestChannel = make(chan ConvertOptions)
+
+// ConvertResponseChannel delivers converted content
+var ConvertResponseChannel = make(chan []byte)
+
+// StopConvertLoopChannel informs stop signal
+var StopConvertLoopChannel = make(chan bool)
+var stopConvertLoop = false
+
+// StartConvertLoop is the main thread loop listen to ConvertRequestChannel
+// and feeding ConvertResponseChannel
+func StartConvertLoop() {
+	log.Println("Starting convert loop")
+
+	Init()
+	defer Destroy()
+
+	go func() {
+		<-StopConvertLoopChannel
+		log.Println("Received StopConvertLoop signal")
+		stopConvertLoop = true
+	}()
+
+	for !stopConvertLoop {
+		log.Println("Waiting for convertion request...")
+		options := <-ConvertRequestChannel
+		log.Println("Received a convertion request for:", options.URL)
+
+		content, err := convert(options)
+		if err != nil {
+			log.Println("Failed to convert:", options.URL)
+			ConvertResponseChannel <- nil
+		}
+
+		log.Println("Sending PDF content:", options.URL)
+		ConvertResponseChannel <- content
+	}
+
+	log.Println("Convert loop is over")
+}
+
+// StopConvertLoop sends a StopConvertLoop signal
+func StopConvertLoop() {
+	log.Println("Sending StopConvertLoop signal")
+	StopConvertLoopChannel <- true
 }
 
 // ConvertPostHandler converts HTML to PDF based on payload options
@@ -29,7 +74,7 @@ func ConvertPostHandler(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	defer r.Body.Close()
 
-	var options Options
+	var options ConvertOptions
 	if err := decoder.Decode(&options); err != nil {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
@@ -39,14 +84,12 @@ func ConvertPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println("Waiting lock for", options.URL)
-	mutex.Lock()
-	log.Println("Locked")
-	content, err := convert(options)
-	log.Println("Unlocking...")
-	mutex.Unlock()
+	log.Println("Requesting for convert:", options.URL)
+	ConvertRequestChannel <- options
+	content := <-ConvertResponseChannel
+	log.Println("Received response for:", options.URL)
 
-	if err != nil {
+	if content == nil {
 		respondWithText(w, r, http.StatusInternalServerError, "Failed to convert file")
 		return
 	}
@@ -66,7 +109,7 @@ func respondWithPDF(w http.ResponseWriter, r *http.Request, statusCode int, payl
 	w.Write(payload)
 }
 
-func convert(opt Options) ([]byte, error) {
+func convert(opt ConvertOptions) ([]byte, error) {
 	// Create object from url
 	object, err := NewObject(opt.URL)
 	if err != nil {

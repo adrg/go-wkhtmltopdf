@@ -39,15 +39,12 @@ import (
 	// pdf "github.com/adrg/go-wkhtmltopdf"         <- You may want to use this instead
 )
 
-func runHTTPServer() error {
-	pdf.Init()
-	defer pdf.Destroy()
-
+func startHTTPServer() error {
 	muxRouter := mux.NewRouter()
 	muxRouter.HandleFunc("/", pdf.ConvertPostHandler).Methods("POST")
 
 	httpPort := "7070"
-	log.Println("Listening on", httpPort)
+	log.Println("HTTP Server listening on", httpPort)
 
 	server := &http.Server{
 		Addr:           ":" + httpPort,
@@ -65,5 +62,6 @@ func runHTTPServer() error {
 }
 
 func main() {
-	log.Fatal(runHTTPServer())
+	go startHTTPServer()
+	pdf.StartConvertLoop()
 }
