@@ -2,6 +2,7 @@ go-wkhtmltopdf
 ==============
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/adrg/go-wkhtmltopdf)
 [![License: MIT](https://img.shields.io/badge/license-mit-red.svg?style=flat-square)](https://opensource.org/licenses/mit)
+[![Go Report Card](https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf)](https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf)
 
 Implements [wkhtmltopdf](https://wkhtmltopdf.org) Go bindings. It can be used to convert HTML documents to PDF files.
 The package does not use the wkhtmltopdf binary. Instead, it uses the wkhtmltox library directly.
