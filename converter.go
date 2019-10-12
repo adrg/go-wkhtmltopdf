@@ -96,6 +96,7 @@ type Converter struct {
 
 	// A number added to all page numbers when rendering headers, footers and
 	// tables of contents.
+	// Default: 0.
 	PageOffset int64
 
 	// Copies of the converted documents to be included in the output document.
@@ -117,7 +118,7 @@ type Converter struct {
 	// Default: 4.
 	OutlineDepth uint64
 
-	// A file path to write an XML representation of the generated outlines.
+	// A location to write an XML representation of the generated outlines.
 	OutlineDumpPath string
 
 	// Specifies whether the conversion process should use lossless compression.
@@ -145,8 +146,7 @@ type Converter struct {
 	ImageDPI uint64
 
 	// The compression factor to use for the JPEG images in the output document.
-	// Range: 0-100.
-	// Default: 100.
+	// Default: 100 (range 0-100).
 	ImageQuality uint64
 
 	// Path of the file used to load and store cookies for web objects.

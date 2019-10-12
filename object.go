@@ -55,21 +55,6 @@ type TOC struct {
 }
 
 // Header contains settings related to the headers and footers of an object.
-//   Substitution variables that can be used in the content fields:
-//
-//   [page]         The number of the current page.
-//   [frompage]     The number of the first page.
-//   [topage]       The number of the last page.
-//   [webpage]      The URL of the source page.
-//   [section]      The name of the current section.
-//   [subsection]   The name of the current subsection.
-//   [date]         The current date in system local format.
-//   [isodate]      The current date in ISO 8601 extended format.
-//   [time]         The current time in system local format.
-//   [title]        The title of the of the current page object.
-//   [doctitle]     The title of the output document.
-//   [sitepage]     The number of the page in the current site being converted.
-//   [sitepages]    The number of pages in the current site being converted.
 type Header struct {
 	// The system font name to use for headers/footers.
 	// Default: "Arial".
@@ -79,14 +64,25 @@ type Header struct {
 	// Default: 12.
 	FontSize uint64
 
-	// The content to print on the left side of the header/footer.
-	ContentLeft string
-
-	// The content to print on the center region of the header/footer.
+	// Content to print on each of the available regions of the header/footer.
+	// Substitution variables that can be used in the content fields:
+	//  - [page]       The number of the current page.
+	//  - [frompage]   The number of the first page.
+	//  - [topage]     The number of the last page.
+	//  - [webpage]    The URL of the source page.
+	//  - [section]    The name of the current section.
+	//  - [subsection] The name of the current subsection.
+	//  - [date]       The current date in system local format.
+	//  - [isodate]    The current date in ISO 8601 extended format.
+	//  - [time]       The current time in system local format.
+	//  - [title]      The title of the of the current page object.
+	//  - [doctitle]   The title of the output document.
+	//  - [sitepage]   The number of the page in the currently converted site.
+	//  - [sitepages]  The number of pages in the current site being converted.
+	// e.g.: object.Footer.ContentRight = "[page]"
+	ContentLeft   string
 	ContentCenter string
-
-	// The content to print on the right side of the header/footer.
-	ContentRight string
+	ContentRight  string
 
 	// Specifies whether a line separator should be printed for headers/footers.
 	// Default: false.
