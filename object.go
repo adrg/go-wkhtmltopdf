@@ -97,7 +97,7 @@ type Header struct {
 	Spacing float64
 
 	// Location of a user defined HTML document to be used as the header/footer.
-	Location string
+	CustomLocation string
 }
 
 // Object represents an HTML document. The contained settings are applied only
@@ -345,7 +345,7 @@ func (o *Object) setOptions() error {
 		newSetOp("header.right", o.Header.ContentRight, optTypeString, setter, true),
 		newSetOp("header.line", o.Header.DisplaySeparator, optTypeBool, setter, true),
 		newSetOp("header.spacing", o.Header.Spacing, optTypeFloat, setter, true),
-		newSetOp("header.htmlUrl", o.Header.Location, optTypeString, setter, true),
+		newSetOp("header.htmlUrl", o.Header.CustomLocation, optTypeString, setter, true),
 
 		// Footer options.
 		newSetOp("footer.fontName", o.Footer.Font, optTypeString, setter, false),
@@ -355,7 +355,7 @@ func (o *Object) setOptions() error {
 		newSetOp("footer.right", o.Footer.ContentRight, optTypeString, setter, true),
 		newSetOp("footer.line", o.Footer.DisplaySeparator, optTypeBool, setter, true),
 		newSetOp("footer.spacing", o.Footer.Spacing, optTypeFloat, setter, true),
-		newSetOp("footer.htmlUrl", o.Footer.Location, optTypeString, setter, true),
+		newSetOp("footer.htmlUrl", o.Footer.CustomLocation, optTypeString, setter, true),
 
 		// Load options.
 		newSetOp("load.username", o.Username, optTypeString, setter, false),
