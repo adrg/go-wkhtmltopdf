@@ -193,6 +193,9 @@ func (c *Converter) Add(object *Object) {
 
 // Run executes the conversion and copies the output to the provided writer.
 func (c *Converter) Run(w io.Writer) error {
+	if c.converter == nil {
+		return errors.New("cannot use uninitialized or destroyed converter")
+	}
 	if w == nil {
 		return errors.New("the provided writer cannot be nil")
 	}

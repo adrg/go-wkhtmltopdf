@@ -315,6 +315,10 @@ func (o *Object) setOption(name, value string) error {
 }
 
 func (o *Object) setOptions() error {
+	if o.settings == nil {
+		return errors.New("cannot use uninitialized or destroyed object")
+	}
+
 	setter := o.setOption
 	opts := []*setOp{
 		// General options.
