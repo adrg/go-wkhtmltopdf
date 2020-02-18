@@ -106,8 +106,9 @@ func main() {
 }
 ```
 
-For more information see the [wkhtmltopdf documentation](https://wkhtmltopdf.org/usage/wkhtmltopdf.txt)
-and the [wkhtmltox documentation](https://wkhtmltopdf.org/libwkhtmltox).
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/adrg/go-wkhtmltopdf.svg)](https://starchart.cc/adrg/go-wkhtmltopdf)
 
 ## Contributing
 
@@ -115,7 +116,13 @@ Contributions in the form of pull requests, issues or just general feedback,
 are always welcome.
 See [CONTRIBUTING.MD](https://github.com/adrg/go-wkhtmltopdf/blob/master/CONTRIBUTING.md).
 
+## References
+
+For more information see the [wkhtmltopdf documentation](https://wkhtmltopdf.org/usage/wkhtmltopdf.txt)
+and the [wkhtmltox documentation](https://wkhtmltopdf.org/libwkhtmltox).
+
 ## License
+
 Copyright (c) 2016 Adrian-George Bostan.
 
 This project is licensed under the [MIT license](https://opensource.org/licenses/MIT).
