@@ -31,7 +31,8 @@ Test payloads:
 ===============================================================================
 INTRIGUING ENOGH is the bugs it gets when running this HTTP server:
 	- it usually hangs forever after 2 or 3 requests;
-	- it hangs forever on the first time you use "load.windowStatus".
+	- it hangs forever on the first time you use "load.windowStatus". But only
+	  sometimes it does work.
 
 It might be the fact that QT does have to work on the main thread,
 but I've tried different implementations with no success.
