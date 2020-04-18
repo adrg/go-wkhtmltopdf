@@ -21,7 +21,7 @@ func main() {
 	}
 	object.Footer.ContentCenter = "This is the header of the first page"
 	object.Footer.ContentRight = "[page]"
-	object.SetOption("load.windowStatus", "ready")
+	object.WindowStatus = "ready"
 
 	// Create object from url
 	object2, err := pdf.NewObject("https://google.com")

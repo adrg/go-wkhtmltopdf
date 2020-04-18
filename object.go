@@ -142,6 +142,10 @@ type Object struct {
 	// Default: 300.
 	JavascriptDelay uint64
 
+	// The content for page's window.status variable to be equal to before
+	// rendering page
+	WindowStatus string
+
 	// Zoom factor to use for the document content.
 	// Default: 1.
 	Zoom float64
@@ -358,6 +362,7 @@ func (o *Object) setOptions() error {
 		newSetOp("load.username", o.Username, optTypeString, setter, false),
 		newSetOp("load.password", o.Password, optTypeString, setter, false),
 		newSetOp("load.jsdelay", o.JavascriptDelay, optTypeUint, setter, false),
+		newSetOp("load.windowStatus", o.WindowStatus, optTypeString, setter, false),
 		newSetOp("load.zoomFactor", o.Zoom, optTypeFloat, setter, false),
 		newSetOp("load.blockLocalFileAccess", o.BlockLocalFileAccess, optTypeBool, setter, true),
 		newSetOp("load.stopSlowScripts", o.StopSlowScripts, optTypeBool, setter, true),
