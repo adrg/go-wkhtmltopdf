@@ -246,7 +246,8 @@ func (c *Converter) Destroy() {
 	c.converter = nil
 }
 
-func (c *Converter) setOption(name, value string) error {
+// SetOption is the low-level API to set options.
+func (c *Converter) SetOption(name, value string) error {
 	if name = strings.TrimSpace(name); name == "" {
 		return errors.New("converter option name cannot be empty")
 	}
@@ -264,7 +265,7 @@ func (c *Converter) setOption(name, value string) error {
 }
 
 func (c *Converter) setOptions() error {
-	setter := c.setOption
+	setter := c.SetOption
 	opts := []*setOp{
 		newSetOp("size.pageSize", string(c.PaperSize), optTypeString, setter, false),
 		newSetOp("size.width", c.Width, optTypeString, setter, false),

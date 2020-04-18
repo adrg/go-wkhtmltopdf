@@ -1,6 +1,7 @@
 package pdf
 
 import (
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -124,11 +125,15 @@ func convert(opt ConvertOptions) ([]byte, error) {
 	}
 
 	// Create converter
-	converter := NewConverter()
+	converter, err := NewConverter()
+	if err != nil {
+		log.Println("Could not create converter for", opt.URL)
+		return nil, err
+	}
 	defer converter.Destroy()
 
 	// Add created object to the converter
-	converter.AddObject(object)
+	converter.Add(object)
 
 	// Add converter options
 	for k, v := range opt.ConverterOptions {
@@ -136,12 +141,14 @@ func convert(opt ConvertOptions) ([]byte, error) {
 	}
 
 	// Convert the objects and get the output PDF document
-	output, err := converter.Convert()
+	output := new(bytes.Buffer)
+	err = converter.Run(output)
 	if err != nil {
 		log.Println("Could not convert object to PDF:", opt.URL)
 		return nil, err
 	}
-	log.Println("PDF", len(output), "bytes of size:", opt.URL)
+	raw := output.Bytes()
+	log.Println("PDF", len(raw), "bytes of size:", opt.URL)
 
-	return output, nil
+	return raw, nil
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"io/ioutil"
 	"log"
 	"os"
@@ -18,8 +19,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	object.SetOption("header.center", "This is the header of the first page")
-	object.SetOption("footer.right", "[page]")
+	object.Footer.ContentCenter = "This is the header of the first page"
+	object.Footer.ContentRight = "[page]"
 	object.SetOption("load.windowStatus", "ready")
 
 	// Create object from url
@@ -40,31 +41,38 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	object3.SetOption("footer.right", "[page]")
+	object3.Footer.ContentLeft = "[date]"
+	object3.Footer.ContentCenter = "Sample footer information 3"
+	object3.Footer.ContentRight = "[page]"
 
 	// Create converter
-	converter := pdf.NewConverter()
-	defer converter.Destroy()
-
-	// Add created objects to the converter
-	converter.AddObject(object)
-	converter.AddObject(object2)
-	converter.AddObject(object3)
-
-	// Add converter options
-	converter.SetOption("documentTitle", "Sample document")
-	converter.SetOption("margin.left", "10mm")
-	converter.SetOption("margin.right", "10mm")
-	converter.SetOption("margin.top", "10mm")
-	converter.SetOption("margin.bottom", "10mm")
-
-	// Convert the objects and get the output PDF document
-	output, err := converter.Convert()
+	converter, err := pdf.NewConverter()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer converter.Destroy()
 
-	err = ioutil.WriteFile("ex1.pdf", output, 0644)
+	// Add created objects to the converter
+	converter.Add(object)
+	converter.Add(object2)
+	converter.Add(object3)
+
+	// Add converter options
+	converter.Title = "Sample document"
+	converter.MarginLeft = "10mm"
+	converter.MarginRight = "10mm"
+	converter.MarginTop = "10mm"
+	converter.MarginBottom = "10mm"
+
+	// Convert the objects and get the output PDF document
+	output := new(bytes.Buffer)
+	err = converter.Run(output)
+	if err != nil {
+		log.Fatal(err)
+	}
+	raw := output.Bytes()
+
+	err = ioutil.WriteFile("ex1.pdf", raw, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
