@@ -106,12 +106,7 @@ func main() {
 	}
 	defer outFile.Close()
 
-<<<<<<< HEAD
 	if err := converter.Run(outFile); err != nil {
-=======
-	err = ioutil.WriteFile("ex1.pdf", output, 0644)
-	if err != nil {
->>>>>>> I did reorganize the examples directory to have more than one example
 		log.Fatal(err)
 	}
 }
