@@ -1,6 +1,12 @@
-PKG_SRC_PATH := $(GOPATH)/src/github.com/leandrosilva/go-wkhtmltopdf
+PKG_SRC_PATH := $(PKG_SRC_PATH)
 
-deploy:
+all:
+ifeq ($(PKG_SRC_PATH),)
+	$(error environment variable PKG_SRC_PATH is not set)
+endif
+	@echo "PKG_SRC_PATH=$(PKG_SRC_PATH)"
+
+deploy: all
 	@rm -rf $(PKG_SRC_PATH)
 	@mkdir -p $(PKG_SRC_PATH)
 	@cp -r ./ $(PKG_SRC_PATH)
