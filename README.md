@@ -5,17 +5,18 @@ go-wkhtmltopdf
 [![Go Report Card](https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf)](https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf)
 
 Implements [wkhtmltopdf](https://wkhtmltopdf.org) Go bindings. It can be used to convert HTML documents to PDF files.
-The package does not use the wkhtmltopdf binary. Instead, it uses the wkhtmltox library directly.
+The package does not use the `wkhtmltopdf` binary. Instead, it uses the `wkhtmltox` library directly.
 
 Full documentation can be found at: https://godoc.org/github.com/adrg/go-wkhtmltopdf
 
 ## Requirements
 
-In order to use the package, wkhtmltox must be installed. Installation packages
+In order to use the package, `wkhtmltox` must be installed. Installation packages
 for multiple operating systems can be found at
-[https://builds.wkhtmltopdf.org](https://builds.wkhtmltopdf.org).
+[https://builds.wkhtmltopdf.org](https://wkhtmltopdf.org/downloads.html) and
+[https://github.com/wkhtmltopdf/packaging/releases](https://github.com/wkhtmltopdf/packaging/releases).
 
-On Debian based distributions, use dpkg to install the downloaded installation package.
+On Debian based distributions, use `dpkg` to install the downloaded installation package.
 ```
 sudo dpkg -i wkhtmltox.deb
 sudo ldconfig
