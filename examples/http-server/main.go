@@ -67,10 +67,9 @@ func startServer() {
 		}
 		url := urls[0]
 
-		// Convert the page at specified URL to PDF.
+		// Convert the page at the specified URL to PDF.
 		out := bytes.NewBuffer(nil)
 		if err := callFunc(func() error {
-
 			// Create object from URL.
 			object, err := pdf.NewObject(string(url))
 			if err != nil {
@@ -84,7 +83,7 @@ func startServer() {
 			}
 			defer converter.Destroy()
 
-			// Add the create object to the converter.
+			// Add object to the converter.
 			converter.Add(object)
 			converter.Title = url
 			converter.PaperSize = pdf.A4
@@ -95,7 +94,7 @@ func startServer() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		// Send converted file back to the caller.
+		// Serve converted file.
 		w.Header().Set("Content-Disposition", "attachment; filename=download.pdf")
 		w.Header().Set("Content-Type", "application/pdf")
 		if _, err := io.Copy(w, out); err != nil {
