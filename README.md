@@ -24,7 +24,7 @@ sudo ldconfig
 ## Installation
     go get github.com/adrg/go-wkhtmltopdf
 
-Alternatively, you may want to clone this repository if you're running a OS other than Windows or a more up to date version of wkhtmltopdf, since the wkhtmltox library shipped here is actually a DLL, version 0.12.4.
+Alternatively, you may want to clone this repository if you're running a OS other than Windows or a more up to date version of wkhtmltopdf.
 
 In this case, we've got a **How To** waiting for you down this page. Keep going.
 
