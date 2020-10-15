@@ -19,6 +19,7 @@ jobs:
 
     - name: Prerequisites
       run: |
+        sudo apt-get -y install xfonts-75dpi xfonts-base
         curl --silent --show-error --location --max-redirs 3 --fail --retry 3 --output wkhtmltopdf-linux-amd64.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
         sudo dpkg -i wkhtmltopdf-linux-amd64.deb
         sudo ldconfig
