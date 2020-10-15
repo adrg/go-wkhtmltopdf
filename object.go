@@ -137,13 +137,13 @@ type Object struct {
 	// The password to use when logging in to a website.
 	Password string
 
-	// The amount of milliseconds to wait after page load, before executing
-	// JS scripts.
+	// The amount of milliseconds to wait after page load, before
+	// executing JS scripts.
 	// Default: 300.
 	JavascriptDelay uint64
 
-	// The content for page's window.status variable to be equal to before
-	// rendering page
+	// Specifies the `window.status` value to wait for, before
+	// rendering the page.
 	WindowStatus string
 
 	// Zoom factor to use for the document content.
