@@ -17,6 +17,13 @@ jobs:
       with:
         go-version: ${{ matrix.go }}
 
+    - name: Prerequisites
+      run: |
+        curl --silent --show-error --location --max-redirs 3 --fail --retry 3 --output wkhtmltopdf-linux-amd64.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
+        sudo dpkg -i wkhtmltopdf-linux-amd64.deb
+        sudo ldconfig
+        rm wkhtmltopdf-linux-amd64.deb
+
     - name: Checkout
       uses: actions/checkout@v2
 
@@ -30,7 +37,7 @@ jobs:
       run: golint -set_exit_status=1 ./...
 
     - name: Vet
-      run: go vet -cgocall=false -buildtag=false ./...
+      run: go vet ./...
 
     - name: Test
       run: go test -v  -coverprofile=coverage.txt -covermode=atomic ./...
