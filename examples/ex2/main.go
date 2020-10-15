@@ -46,12 +46,17 @@ doing something dumb.
 import (
 	"log"
 	"net/http"
+	"runtime"
 	"time"
 
 	"github.com/gorilla/mux"
 	pdf "github.com/leandrosilva/go-wkhtmltopdf" // <- This is what I use on my machine
 	// pdf "github.com/adrg/go-wkhtmltopdf"         <- You may want to use this instead
 )
+
+func init() {
+	runtime.LockOSThread()
+}
 
 func startHTTPServer() error {
 	muxRouter := mux.NewRouter()
