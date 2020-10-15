@@ -1,21 +1,26 @@
 go-wkhtmltopdf
 ==============
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/adrg/go-wkhtmltopdf)
-[![License: MIT](https://img.shields.io/badge/license-mit-red.svg?style=flat-square)](https://opensource.org/licenses/mit)
-[![Go Report Card](https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf)](https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf)
+[![pkg.go.dev documentation](https://pkg.go.dev/badge/github.com/adrg/go-wkhtmltopdf)](https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf)
+[![MIT license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Go report card](https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf)](https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf)
 
 Implements [wkhtmltopdf](https://wkhtmltopdf.org) Go bindings. It can be used to convert HTML documents to PDF files.
-The package does not use the wkhtmltopdf binary. Instead, it uses the wkhtmltox library directly.
+The package does not use the `wkhtmltopdf` binary. Instead, it uses the `wkhtmltox` library directly.
 
-Full documentation can be found at: https://godoc.org/github.com/adrg/go-wkhtmltopdf
+Full documentation can be found at: https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf.
 
-## Requirements
+Examples:  
+* [Basic usage](examples/basic-usage/main.go)
+* [Web page to PDF conversion server](examples/http-server)
 
-In order to use the package, wkhtmltox must be installed. Installation packages
+## Prerequisites
+
+In order to use the package, `wkhtmltox` must be installed. Installation packages
 for multiple operating systems can be found at
-[https://builds.wkhtmltopdf.org](https://builds.wkhtmltopdf.org).
+[https://builds.wkhtmltopdf.org](https://wkhtmltopdf.org/downloads.html) and
+[https://github.com/wkhtmltopdf/packaging/releases](https://github.com/wkhtmltopdf/packaging/releases).
 
-On Debian based distributions, use dpkg to install the downloaded installation package.
+On Debian based distributions, use `dpkg` to install the downloaded installation package.
 ```
 sudo dpkg -i wkhtmltox.deb
 sudo ldconfig
@@ -115,6 +120,10 @@ func main() {
 Contributions in the form of pull requests, issues or just general feedback,
 are always welcome.
 See [CONTRIBUTING.MD](https://github.com/adrg/go-wkhtmltopdf/blob/master/CONTRIBUTING.md).
+
+**Contributors**:
+[adrg](https://github.com/adrg),
+[leandrosilva](https://github.com/leandrosilva).
 
 ## References
 
