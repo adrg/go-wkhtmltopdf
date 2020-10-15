@@ -137,10 +137,14 @@ type Object struct {
 	// The password to use when logging in to a website.
 	Password string
 
-	// The amount of milliseconds to wait after page load, before executing
-	// JS scripts.
+	// The amount of milliseconds to wait after page load, before
+	// executing JS scripts.
 	// Default: 300.
 	JavascriptDelay uint64
+
+	// Specifies the `window.status` value to wait for, before
+	// rendering the page.
+	WindowStatus string
 
 	// Zoom factor to use for the document content.
 	// Default: 1.
@@ -357,6 +361,7 @@ func (o *Object) setOptions() error {
 		newSetOp("load.username", o.Username, optTypeString, setter, false),
 		newSetOp("load.password", o.Password, optTypeString, setter, false),
 		newSetOp("load.jsdelay", o.JavascriptDelay, optTypeUint, setter, false),
+		newSetOp("load.windowStatus", o.WindowStatus, optTypeString, setter, false),
 		newSetOp("load.zoomFactor", o.Zoom, optTypeFloat, setter, false),
 		newSetOp("load.blockLocalFileAccess", o.BlockLocalFileAccess, optTypeBool, setter, true),
 		newSetOp("load.stopSlowScripts", o.StopSlowScripts, optTypeBool, setter, true),
