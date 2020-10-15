@@ -27,20 +27,6 @@ Test payloads:
 		"load.windowStatus": "ready"
 	}
 }
-
-===============================================================================
-INTRIGUING ENOGH is the bugs it gets when running this HTTP server:
-	- it usually hangs forever after 2 or 3 requests;
-	- it hangs forever on the first time you use "load.windowStatus". But only
-	  sometimes it does work.
-
-It might be the fact that QT does have to work on the main thread,
-but I've tried different implementations with no success.
-
-And to add a little spice to the nature of the problem, I've done something
-similar in C++ and it works a charm with no hangs. I don't know, I must be
-doing something dumb.
-===============================================================================
 */
 
 import (
