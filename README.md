@@ -147,9 +147,9 @@ What you want to do is to set this variable to your actual $GOPATH and package s
 
 This is going to copy this directory to your $GOPATH source structure and **go install** it, making it available to your own programs to use it.
 
-### 5: Build the example 1
+### 5: Build an example
 
-	cd ./examples/ex1
+	cd ./examples/usage-with-local-pages
 	make build
 
 As result of this command you going to get a **ex1.exe** file in ths very directory.
