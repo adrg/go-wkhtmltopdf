@@ -173,8 +173,9 @@ are always welcome.
 See [CONTRIBUTING.MD](https://github.com/adrg/go-wkhtmltopdf/blob/master/CONTRIBUTING.md).
 
 **Contributors**:
-[adrg](https://github.com/adrg),
-[leandrosilva](https://github.com/leandrosilva).
+
+* [adrg](https://github.com/adrg)
+* [leandrosilva](https://github.com/leandrosilva)
 
 ## References
 
