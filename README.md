@@ -9,7 +9,11 @@ The package does not use the `wkhtmltopdf` binary. Instead, it uses the `wkhtmlt
 
 Full documentation can be found at: https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf.
 
-## Requirements
+Examples:  
+* [Basic usage](examples/basic-usage/main.go)
+* [Web page to PDF conversion server](examples/http-server)
+
+## Prerequisites
 
 In order to use the package, `wkhtmltox` must be installed. Installation packages
 for multiple operating systems can be found at
@@ -116,6 +120,10 @@ func main() {
 Contributions in the form of pull requests, issues or just general feedback,
 are always welcome.
 See [CONTRIBUTING.MD](https://github.com/adrg/go-wkhtmltopdf/blob/master/CONTRIBUTING.md).
+
+**Contributors**:
+[adrg](https://github.com/adrg),
+[leandrosilva](https://github.com/leandrosilva).
 
 ## References
 
