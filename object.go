@@ -284,17 +284,18 @@ func newObject(location string, temporary bool) (*Object, error) {
 
 // Destroy releases all resources used by the object.
 func (o *Object) Destroy() {
-	if o.settings == nil {
-		return
-	}
-
-	// Remove temporary files.
+	// Remove temporary file.
 	if o.temporary && o.location != "" {
 		os.Remove(o.location)
+		o.location = ""
+		o.temporary = false
 	}
 
-	C.wkhtmltopdf_destroy_object_settings(o.settings)
-	o.settings = nil
+	// Destroy settings.
+	if o.settings != nil {
+		C.wkhtmltopdf_destroy_object_settings(o.settings)
+		o.settings = nil
+	}
 }
 
 func (o *Object) setOption(name, value string) error {
