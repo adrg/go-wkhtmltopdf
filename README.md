@@ -1,5 +1,6 @@
 go-wkhtmltopdf
 ==============
+[![Build Status](https://github.com/adrg/go-wkhtmltopdf/workflows/CI/badge.svg)](https://github.com/adrg/go-wkhtmltopdf/actions?query=workflow%3ACI)
 [![pkg.go.dev documentation](https://pkg.go.dev/badge/github.com/adrg/go-wkhtmltopdf)](https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf)
 [![MIT license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Go report card](https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf)](https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf)
@@ -11,7 +12,8 @@ Full documentation can be found at: https://pkg.go.dev/github.com/adrg/go-wkhtml
 
 Examples:  
 * [Basic usage](examples/basic-usage/main.go)
-* [Web page to PDF conversion server](examples/http-server)
+* [Basic web page to PDF conversion server](examples/http-server)
+* [Configurable web page to PDF conversion server](examples/http-server-advanced)
 
 ## Prerequisites
 
