@@ -13,7 +13,8 @@ The package does not use the `wkhtmltopdf` binary. Instead, it uses the `wkhtmlt
 
 Full documentation can be found at: https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf.
 
-Examples:  
+**Examples**
+
 * [Basic usage](examples/basic-usage/main.go)
 * [Convert HTML document based on JSON input](examples/json-input/main.go)
 * [Basic web page to PDF conversion server](examples/http-server)
