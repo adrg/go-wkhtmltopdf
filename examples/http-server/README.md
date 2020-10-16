@@ -11,6 +11,7 @@ a separate `goroutine`.
 For more information, see:  
 • [https://github.com/wkhtmltopdf/wkhtmltopdf/issues/1711](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/1711)  
 • [https://forum.dlang.org/thread/qmnmirbwmrvwexaewmtw@forum.dlang.org](https://forum.dlang.org/thread/qmnmirbwmrvwexaewmtw@forum.dlang.org)  
+• [https://forum.qt.io/topic/84485/qapplication-not-created-in-main-thread/9](https://forum.qt.io/topic/84485/qapplication-not-created-in-main-thread/9)
 
 **The solution**
 
