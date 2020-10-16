@@ -72,65 +72,65 @@ const (
 	Tabloid   PaperSize = "Tabloid"   // 279.4 x 431.8 mm
 )
 
-// Converter represents an HTML to PDF converter. The contained settings are
-// applied to all converted objects.
-type Converter struct {
+// ConverterOpts defines a set of options to be used in the conversion process.
+type ConverterOpts struct {
 	// The paper size of the output document.
+	// E.g.: A4.
 	PaperSize PaperSize
 
-	// The width of the output document. (e.g. "4cm")
+	// The width of the output document.
+	// E.g.: "4cm".
 	Width string
 
-	// The height of the output document. (e.g. "12in")
+	// The height of the output document.
+	// E.g. "12in".
 	Height string
 
 	// The orientation of the output document.
+	// E.g.: Potrait.
 	Orientation Orientation
 
 	// The color mode of the output document.
+	// E.g.: Color.
 	Colorspace Colorspace
 
 	// DPI of the output document.
-	// Default: 96.
+	// E.g.: 96.
 	DPI uint64
 
 	// A number added to all page numbers when rendering headers, footers and
 	// tables of contents.
-	// Default: 0.
 	PageOffset int64
 
 	// Copies of the converted documents to be included in the output document.
-	// Default: 1.
+	// E.g.: 1.
 	Copies uint64
 
 	// Specifies whether copies should be collated.
-	// Default: true.
 	Collate bool
 
 	// The title of the output document.
 	Title string
 
 	// Specifies whether outlines should be generated for the output document.
-	// Default: true.
 	GenerateOutline bool
 
 	// The maximum number of nesting levels in outlines.
-	// Default: 4.
+	// E.g.: 4.
 	OutlineDepth uint64
 
 	// A location to write an XML representation of the generated outlines.
 	OutlineDumpPath string
 
 	// Specifies whether the conversion process should use lossless compression.
-	// Default: true.
 	UseCompression bool
 
 	// Size of the top margin. (e.g. "2cm")
-	// Default: 0.
+	// E.g.: "1cm".
 	MarginTop string
 
 	// Size of the bottom margin. (e.g. "2cm")
-	// Default: 0.
+	// E.g.: "1cm".
 	MarginBottom string
 
 	// Size of the left margin. (e.g. "2cm")
@@ -138,51 +138,96 @@ type Converter struct {
 	MarginLeft string
 
 	// Size of the right margin. (e.g. "2cm")
-	// Default: "10mm".
+	// E.g.: "10mm".
 	MarginRight string
 
 	// The maximum number of DPI for the images in the output document.
-	// Default: 600.
+	// E.g.: 600.
 	ImageDPI uint64
 
 	// The compression factor to use for the JPEG images in the output document.
-	// Default: 100 (range 0-100).
+	// E.g.: 100 (range 0-100).
 	ImageQuality uint64
 
 	// Path of the file used to load and store cookies for web objects.
 	CookieJarPath string
-
-	converter *C.wkhtmltopdf_converter
-	settings  *C.wkhtmltopdf_global_settings
-	objects   []*Object
 }
 
-// NewConverter returns a new converter instance.
-func NewConverter() (*Converter, error) {
-	settings := C.wkhtmltopdf_create_global_settings()
-	if settings == nil {
-		return nil, errors.New("could not create converter settings")
-	}
-
-	converter := C.wkhtmltopdf_create_converter(settings)
-	if converter == nil {
-		return nil, errors.New("could not create converter")
-	}
-
-	return &Converter{
-		converter:       converter,
-		settings:        settings,
+// NewConverterOpts returns a new instance of converter options, configured
+// using sensible defaults.
+//
+//   Defaults options:
+//
+//   PaperSize:       A4,
+//   Orientation:     Portrait,
+//   Colorspace:      Color,
+//   DPI:             96,
+//   Copies:          1,
+//   Collate:         true,
+//   GenerateOutline: true,
+//   OutlineDepth:    4,
+//   UseCompression:  true,
+//   MarginLeft:      "10mm",
+//   MarginRight:     "10mm",
+//   ImageDPI:        600,
+//   ImageQuality:    100,
+func NewConverterOpts() *ConverterOpts {
+	return &ConverterOpts{
+		PaperSize:       A4,
 		Orientation:     Portrait,
 		Colorspace:      Color,
 		DPI:             96,
 		Copies:          1,
 		Collate:         true,
 		GenerateOutline: true,
+		OutlineDepth:    4,
 		UseCompression:  true,
 		MarginLeft:      "10mm",
 		MarginRight:     "10mm",
 		ImageDPI:        600,
 		ImageQuality:    100,
+	}
+}
+
+// Converter represents an HTML to PDF converter. The contained options are
+// applied to all converted objects.
+type Converter struct {
+	*ConverterOpts
+	converter *C.wkhtmltopdf_converter
+	settings  *C.wkhtmltopdf_global_settings
+	objects   []*Object
+}
+
+// NewConverter returns a new converter instance, configured using the default
+// options. See NewConverterOpts for the default options.
+func NewConverter() (*Converter, error) {
+	return NewConverterWithOpts(nil)
+}
+
+// NewConverterWithOpts returns a new converter instance, configured using the
+// specified options. If no options are provided, the default options are used.
+// See NewConverterOpts for the default options.
+func NewConverterWithOpts(opts *ConverterOpts) (*Converter, error) {
+	if opts == nil {
+		opts = NewConverterOpts()
+	}
+
+	// Create converter settings.
+	settings := C.wkhtmltopdf_create_global_settings()
+	if settings == nil {
+		return nil, errors.New("could not create converter settings")
+	}
+
+	// Create converter.
+	converter := C.wkhtmltopdf_create_converter(settings)
+	if converter == nil {
+		return nil, errors.New("could not create converter")
+	}
+
+	return &Converter{
+		ConverterOpts: opts,
+		converter:     converter,
+		settings:      settings,
 	}, nil
 }
 
