@@ -30,38 +30,35 @@ const (
 type TOC struct {
 	// Specifies whether dotted lines should be used for the line of items
 	// of the TOC.
-	// Default: true.
 	UseDottedLines bool
 
 	// The title used for the table of contents.
-	// Default: "Table of Contents".
+	// E.g.: "Table of Contents".
 	Title string
 
 	// Specifies whether the TOC items should contain links to the content.
-	// Default: true.
 	GenerateForwardLinks bool
 
 	// Specifies whether the content should contain links to the TOC.
-	// Default: true.
 	GenerateBackLinks bool
 
 	// The indentation used for the TOC nesting levels.
-	// Default: "1em".
+	// E.g.: "1em".
 	Indentation string
 
 	// Scaling factor for each nesting level of the TOC.
-	// Default: 1.
+	// E.g.: 1.
 	FontScale float64
 }
 
 // Header contains settings related to the headers and footers of an object.
 type Header struct {
 	// The system font name to use for headers/footers.
-	// Default: "Arial".
+	// E.g.: "Arial".
 	Font string
 
 	// The font size to use for headers/footers.
-	// Default: 12.
+	// E.g.: 12.
 	FontSize uint64
 
 	// Content to print on each of the available regions of the header/footer.
@@ -85,37 +82,34 @@ type Header struct {
 	ContentRight  string
 
 	// Specifies whether a line separator should be printed for headers/footers.
-	// Default: false.
 	DisplaySeparator bool
 
 	// The amount of space between the header/footer and the content.
-	// Default: 0.
+	// E.g.: 0.
 	Spacing float64
 
 	// Location of a user defined HTML document to be used as the header/footer.
 	CustomLocation string
 }
 
-// Object represents an HTML document. The contained settings are applied only
-// to the current object.
-type Object struct {
+// ObjectOpts defines a set of options to be used in the conversion process.
+type ObjectOpts struct {
+	// Specifies the location of the HTML document. Can be a file path or a URL.
+	Location string
+
 	// Specifies whether external links in the HTML document should be converted
 	// to external PDF links.
-	// Default: true.
 	UseExternalLinks bool
 
 	// Specifies whether internal links in the HTML document should be converted
 	// into PDF references.
-	// Default: true.
 	UseLocalLinks bool
 
 	// Specifies whether HTML forms should be converted into PDF forms.
-	// Default: true.
 	ProduceForms bool
 
 	// Specifies whether the sections from the HTML document are included in
 	// outlines and TOCs.
-	// Default: true.
 	IncludeInOutline bool
 
 	// Specifies whether the page count of the HTML document participates in
@@ -139,60 +133,53 @@ type Object struct {
 
 	// The amount of milliseconds to wait after page load, before
 	// executing JS scripts.
-	// Default: 300.
+	// E.g.: 300.
 	JavascriptDelay uint64
 
 	// Specifies the `window.status` value to wait for, before
 	// rendering the page.
+	// E.g.: "ready".
 	WindowStatus string
 
 	// Zoom factor to use for the document content.
-	// Default: 1.
+	// E.g.: 1.
 	Zoom float64
 
 	// Specifies whether local file access is blocked.
-	// Default: false.
 	BlockLocalFileAccess bool
 
 	// Specifies whether slow JS scripts should be stopped.
-	// Default: true.
 	StopSlowScripts bool
 
 	// Specifies a course of action when an HTML document fails to load.
-	// Default: abort.
+	// E.g.: ActionAbort.
 	ErrorAction ErrorAction
 
 	// The name of a proxy to use when loading the HTML document.
 	Proxy string
 
 	// Specifies whether the background of the HTML document is preserved.
-	// Default: true.
 	PrintBackground bool
 
 	// Specifies whether the images in the HTML document are loaded.
-	// Default: true.
 	LoadImages bool
 
 	// Specifies whether Javascript should be executed.
-	// Default: true.
 	EnableJavascript bool
 
 	// Specifies whether to use intelligent shrinkng in order to fit more
 	// content on a page.
-	// Default: true.
 	UseSmartShrinking bool
 
 	// The minimum font size allowed for rendering content.
-	// Default: not set.
 	MinFontSize uint64
 
 	// The text encoding to use if the HTML document does not specify one.
-	// Default: "utf-8".
+	// E.g.: "utf-8".
 	DefaultEncoding string
 
 	// Specifies whether the content should be rendered using the print media
 	// type instead of the screen media type.
-	// Default: false.
 	UsePrintMediaType bool
 
 	// The location of a user defined stylesheet to use when converting
@@ -200,56 +187,45 @@ type Object struct {
 	UserStylesheetLocation string
 
 	// Specifies whether NS plugins should be enabled.
-	// Default: false.
 	EnablePlugins bool
-
-	settings  *C.wkhtmltopdf_object_settings
-	location  string
-	temporary bool
 }
 
-// NewObject returns a new object instance from the document at the specified
-// location. The location parameter can be a file path or a URL.
-func NewObject(location string) (*Object, error) {
-	return newObject(location, false)
-}
-
-// NewObjectFromReader creates a new object from the specified reader.
-func NewObjectFromReader(r io.Reader) (*Object, error) {
-	file, err := ioutil.TempFile("", "pdf-")
-	if err != nil {
-		return nil, err
-	}
-
-	if _, err := io.Copy(file, r); err != nil {
-		return nil, err
-	}
-
-	tempLocation := file.Name()
-	if err := file.Close(); err != nil {
-		return nil, err
-	}
-
-	location := fmt.Sprintf("%s.html", tempLocation)
-	if err := os.Rename(tempLocation, location); err != nil {
-		return nil, err
-	}
-
-	return newObject(location, true)
-}
-
-func newObject(location string, temporary bool) (*Object, error) {
-	settings := C.wkhtmltopdf_create_object_settings()
-	if settings == nil {
-		return nil, errors.New("could not create object settings")
-	}
-
-	o := &Object{
-		settings:          settings,
-		location:          location,
-		temporary:         temporary,
+// NewObjectOpts returns a new instance of object options, configured
+// using sensible defaults.
+//
+//   Defaults options:
+//
+//   UseExternalLinks:  true
+//   UseLocalLinks:     true
+//   IncludeInOutline:  true
+//   CountPages:        true
+//   JavascriptDelay:   300
+//   Zoom:              1
+//   StopSlowScripts:   true
+//   ErrorAction:       ActionAbort
+//   PrintBackground:   true
+//   LoadImages:        true
+//   EnableJavascript:  true
+//   UseSmartShrinking: true
+//   DefaultEncoding:   "utf-8"
+//   TOC:
+//   	UseDottedLines:       true
+//   	Title:                "Table of Contents"
+//   	GenerateForwardLinks: true
+//   	GenerateBackLinks:    true
+//   	Indentation:          "1em"
+//   	FontScale:            1
+//   Header:
+//   	Font:     "Arial"
+//   	FontSize: 12
+//   Footer:
+//   	Font:     "Arial"
+//   	FontSize: 12,
+func NewObjectOpts() *ObjectOpts {
+	return &ObjectOpts{
 		UseExternalLinks:  true,
 		UseLocalLinks:     true,
+		ProduceForms:      true,
 		IncludeInOutline:  true,
 		CountPages:        true,
 		JavascriptDelay:   300,
@@ -278,16 +254,86 @@ func newObject(location string, temporary bool) (*Object, error) {
 			FontSize: 12,
 		},
 	}
+}
 
-	return o, nil
+// Object represents an HTML document. The contained options are applied only
+// to the current object.
+type Object struct {
+	*ObjectOpts
+	settings  *C.wkhtmltopdf_object_settings
+	temporary bool
+}
+
+// NewObject returns a new object instance from the document at the specified
+// location. The location can be a file path or a URL. The object is configured
+// using sensible defaults. See NewObjectOpts for the default options.
+func NewObject(location string) (*Object, error) {
+	return newObject(location, false, nil)
+}
+
+// NewObjectWithOpts returns a new object instance from the document at the
+// specified location. The location can be a file path or a URL. The object is
+// configured using the specified options. If no options are provided, sensible
+// defaults are used. See NewObjectOpts for the default options.
+func NewObjectWithOpts(opts *ObjectOpts) (*Object, error) {
+	return newObject("", false, opts)
+}
+
+// NewObjectFromReader creates a new object from the specified reader.
+// The object is configured using sensible defaults. See NewObjectOpts for
+// the default options.
+func NewObjectFromReader(r io.Reader) (*Object, error) {
+	file, err := ioutil.TempFile("", "pdf-")
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err := io.Copy(file, r); err != nil {
+		return nil, err
+	}
+
+	tempLocation := file.Name()
+	if err := file.Close(); err != nil {
+		return nil, err
+	}
+
+	location := fmt.Sprintf("%s.html", tempLocation)
+	if err := os.Rename(tempLocation, location); err != nil {
+		return nil, err
+	}
+
+	return newObject(location, true, nil)
+}
+
+func newObject(location string, temp bool, opts *ObjectOpts) (*Object, error) {
+	if opts == nil {
+		opts = NewObjectOpts()
+	}
+	if location != "" {
+		opts.Location = location
+	}
+	if opts.Location == "" {
+		return nil, errors.New("must provide HTML document location")
+	}
+
+	settings := C.wkhtmltopdf_create_object_settings()
+	if settings == nil {
+		return nil, errors.New("could not create object settings")
+	}
+
+	return &Object{
+		ObjectOpts: opts,
+		settings:   settings,
+		temporary:  temp,
+	}, nil
 }
 
 // Destroy releases all resources used by the object.
 func (o *Object) Destroy() {
 	// Remove temporary file.
-	if o.temporary && o.location != "" {
-		os.Remove(o.location)
-		o.location = ""
+	if o.temporary && o.Location != "" {
+		os.Remove(o.Location)
+		o.Location = ""
 		o.temporary = false
 	}
 
@@ -323,7 +369,7 @@ func (o *Object) setOptions() error {
 	setter := o.setOption
 	opts := []*setOp{
 		// General options.
-		newSetOp("page", o.location, optTypeString, setter, true),
+		newSetOp("page", o.Location, optTypeString, setter, true),
 		newSetOp("useExternalLinks", o.UseExternalLinks, optTypeBool, setter, true),
 		newSetOp("useLocalLinks", o.UseLocalLinks, optTypeBool, setter, true),
 		newSetOp("produceForms", o.ProduceForms, optTypeBool, setter, true),
