@@ -8,7 +8,10 @@ import (
 )
 
 func main() {
-	pdf.Init()
+	// Initialize library.
+	if err := pdf.Init(); err != nil {
+		log.Fatal(err)
+	}
 	defer pdf.Destroy()
 
 	// Create object from file.

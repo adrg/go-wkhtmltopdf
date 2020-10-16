@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"io"
 	"log"
 	"net/http"
@@ -52,32 +53,42 @@ func callFunc(f func() error) error {
 	return <-err
 }
 
+type requestData struct {
+	ConverterOpts *pdf.ConverterOpts `json:"converterOpts"`
+	ObjectOpts    *pdf.ObjectOpts    `json:"objectOpts"`
+}
+
 func startServer() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// Check request method and path.
-		if r.Method != http.MethodGet || r.URL.Path != "/" {
+		if r.Method != http.MethodPost || r.URL.Path != "/" {
 			http.NotFound(w, r)
 			return
 		}
 
-		// Get URL to convert.
-		urls, ok := r.URL.Query()["url"]
-		if !ok || len(urls) != 1 {
-			http.Error(w, "invalid request query", http.StatusBadRequest)
+		// Set default options. Any option fields specified in the request
+		// body will overwrite the defaults.
+		data := &requestData{
+			ConverterOpts: pdf.NewConverterOpts(),
+			ObjectOpts:    pdf.NewObjectOpts(),
 		}
-		url := urls[0]
+
+		// Decode request body.
+		if err := json.NewDecoder(r.Body).Decode(data); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
 
 		// Convert the page at the specified URL to PDF.
 		out := bytes.NewBuffer(nil)
 		if err := callFunc(func() error {
-			// Create object from URL.
-			object, err := pdf.NewObject(string(url))
+			// Create object with options.
+			object, err := pdf.NewObjectWithOpts(data.ObjectOpts)
 			if err != nil {
 				return err
 			}
 
-			// Create converter.
-			converter, err := pdf.NewConverter()
+			// Create converter with options.
+			converter, err := pdf.NewConverterWithOpts(data.ConverterOpts)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -85,8 +96,6 @@ func startServer() {
 
 			// Add object to the converter.
 			converter.Add(object)
-			converter.Title = url
-			converter.PaperSize = pdf.A4
 
 			// Perform the conversion.
 			return converter.Run(out)
