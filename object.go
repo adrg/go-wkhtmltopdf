@@ -30,36 +30,36 @@ const (
 type TOC struct {
 	// Specifies whether dotted lines should be used for the line of items
 	// of the TOC.
-	UseDottedLines bool
+	UseDottedLines bool `json:"useDottedLines" yaml:"useDottedLines"`
 
 	// The title used for the table of contents.
 	// E.g.: "Table of Contents".
-	Title string
+	Title string `json:"title" yaml:"title"`
 
 	// Specifies whether the TOC items should contain links to the content.
-	GenerateForwardLinks bool
+	GenerateForwardLinks bool `json:"generateForwardLinks" yaml:"generateForwardLinks"`
 
 	// Specifies whether the content should contain links to the TOC.
-	GenerateBackLinks bool
+	GenerateBackLinks bool `json:"generateBackLinks" yaml:"generateBackLinks"`
 
 	// The indentation used for the TOC nesting levels.
 	// E.g.: "1em".
-	Indentation string
+	Indentation string `json:"indentation" yaml:"indentation"`
 
 	// Scaling factor for each nesting level of the TOC.
 	// E.g.: 1.
-	FontScale float64
+	FontScale float64 `json:"fontScale" yaml:"fontScale"`
 }
 
 // Header contains settings related to the headers and footers of an object.
 type Header struct {
 	// The system font name to use for headers/footers.
 	// E.g.: "Arial".
-	Font string
+	Font string `json:"font" yaml:"font"`
 
 	// The font size to use for headers/footers.
 	// E.g.: 12.
-	FontSize uint64
+	FontSize uint64 `json:"fontSize" yaml:"fontSize"`
 
 	// Content to print on each of the available regions of the header/footer.
 	// Substitution variables that can be used in the content fields:
@@ -77,117 +77,117 @@ type Header struct {
 	//  - [sitepage]   The number of the page in the currently converted site.
 	//  - [sitepages]  The number of pages in the current site being converted.
 	// e.g.: object.Footer.ContentRight = "[page]"
-	ContentLeft   string
-	ContentCenter string
-	ContentRight  string
+	ContentLeft   string `json:"contentLeft" yaml:"contentLeft"`
+	ContentCenter string `json:"contentCenter" yaml:"contentCenter"`
+	ContentRight  string `json:"contentRight" yaml:"contentRight"`
 
 	// Specifies whether a line separator should be printed for headers/footers.
-	DisplaySeparator bool
+	DisplaySeparator bool `json:"displaySeparator" yaml:"displaySeparator"`
 
 	// The amount of space between the header/footer and the content.
 	// E.g.: 0.
-	Spacing float64
+	Spacing float64 `json:"spacing" yaml:"spacing"`
 
 	// Location of a user defined HTML document to be used as the header/footer.
-	CustomLocation string
+	CustomLocation string `json:"customLocation" yaml:"customLocation"`
 }
 
 // ObjectOpts defines a set of options to be used in the conversion process.
 type ObjectOpts struct {
 	// Specifies the location of the HTML document. Can be a file path or a URL.
-	Location string
+	Location string `json:"location" yaml:"location"`
 
 	// Specifies whether external links in the HTML document should be converted
 	// to external PDF links.
-	UseExternalLinks bool
+	UseExternalLinks bool `json:"useExternalLinks" yaml:"useExternalLinks"`
 
 	// Specifies whether internal links in the HTML document should be converted
 	// into PDF references.
-	UseLocalLinks bool
+	UseLocalLinks bool `json:"useLocalLinks" yaml:"useLocalLinks"`
 
 	// Specifies whether HTML forms should be converted into PDF forms.
-	ProduceForms bool
+	ProduceForms bool `json:"produceForms" yaml:"produceForms"`
 
 	// Specifies whether the sections from the HTML document are included in
 	// outlines and TOCs.
-	IncludeInOutline bool
+	IncludeInOutline bool `json:"includeInOutline" yaml:"includeInOutline"`
 
 	// Specifies whether the page count of the HTML document participates in
 	// the counter used for tables of contents, headers and footers.
-	CountPages bool
+	CountPages bool `json:"countPages" yaml:"countPages"`
 
 	// Contains settings for the TOC of the object.
-	TOC TOC
+	TOC TOC `json:"toc" yaml:"toc"`
 
 	// Contains settings for the header of the object.
-	Header Header
+	Header Header `json:"header" yaml:"header"`
 
 	// Contains settings for the footer of the object.
-	Footer Header
+	Footer Header `json:"footer" yaml:"footer"`
 
 	// The username to use when logging in to a website.
-	Username string
+	Username string `json:"username" yaml:"username"`
 
 	// The password to use when logging in to a website.
-	Password string
+	Password string `json:"password" yaml:"password"`
 
 	// The amount of milliseconds to wait after page load, before
 	// executing JS scripts.
 	// E.g.: 300.
-	JavascriptDelay uint64
+	JavascriptDelay uint64 `json:"javascriptDelay" yaml:"javascriptDelay"`
 
 	// Specifies the `window.status` value to wait for, before
 	// rendering the page.
 	// E.g.: "ready".
-	WindowStatus string
+	WindowStatus string `json:"windowStatus" yaml:"windowStatus"`
 
 	// Zoom factor to use for the document content.
 	// E.g.: 1.
-	Zoom float64
+	Zoom float64 `json:"zoom" yaml:"zoom"`
 
 	// Specifies whether local file access is blocked.
-	BlockLocalFileAccess bool
+	BlockLocalFileAccess bool `json:"blockLocalFileAccess" yaml:"blockLocalFileAccess"`
 
 	// Specifies whether slow JS scripts should be stopped.
-	StopSlowScripts bool
+	StopSlowScripts bool `json:"stopSlowScripts" yaml:"stopSlowScripts"`
 
 	// Specifies a course of action when an HTML document fails to load.
 	// E.g.: ActionAbort.
-	ErrorAction ErrorAction
+	ErrorAction ErrorAction `json:"errorAction" yaml:"errorAction"`
 
 	// The name of a proxy to use when loading the HTML document.
-	Proxy string
+	Proxy string `json:"proxy" yaml:"proxy"`
 
 	// Specifies whether the background of the HTML document is preserved.
-	PrintBackground bool
+	PrintBackground bool `json:"printBackground" yaml:"printBackground"`
 
 	// Specifies whether the images in the HTML document are loaded.
-	LoadImages bool
+	LoadImages bool `json:"loadImages" yaml:"loadImages"`
 
 	// Specifies whether Javascript should be executed.
-	EnableJavascript bool
+	EnableJavascript bool `json:"enableJavascript" yaml:"enableJavascript"`
 
 	// Specifies whether to use intelligent shrinkng in order to fit more
 	// content on a page.
-	UseSmartShrinking bool
+	UseSmartShrinking bool `json:"useSmartShrinking" yaml:"useSmartShrinking"`
 
 	// The minimum font size allowed for rendering content.
-	MinFontSize uint64
+	MinFontSize uint64 `json:"minFontSize" yaml:"minFontSize"`
 
 	// The text encoding to use if the HTML document does not specify one.
 	// E.g.: "utf-8".
-	DefaultEncoding string
+	DefaultEncoding string `json:"defaultEncoding" yaml:"defaultEncoding"`
 
 	// Specifies whether the content should be rendered using the print media
 	// type instead of the screen media type.
-	UsePrintMediaType bool
+	UsePrintMediaType bool `json:"usePrintMediaType" yaml:"usePrintMediaType"`
 
 	// The location of a user defined stylesheet to use when converting
 	// the HTML document.
-	UserStylesheetLocation string
+	UserStylesheetLocation string `json:"userStylesheetLocation" yaml:"userStylesheetLocation"`
 
 	// Specifies whether NS plugins should be enabled.
-	EnablePlugins bool
+	EnablePlugins bool `json:"enablePlugins" yaml:"enablePlugins"`
 }
 
 // NewObjectOpts returns a new instance of object options, configured

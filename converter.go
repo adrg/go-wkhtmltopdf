@@ -86,7 +86,7 @@ type ConverterOpts struct {
 	Height string `json:"height" yaml:"height"`
 
 	// The orientation of the output document.
-	// E.g.: Potrait.
+	// E.g.: Portrait.
 	Orientation Orientation `json:"orientation" yaml:"orientation"`
 
 	// The color mode of the output document.
@@ -133,7 +133,7 @@ type ConverterOpts struct {
 	MarginBottom string `json:"marginBottom" yaml:"marginBottom"`
 
 	// Size of the left margin. (e.g. "2cm")
-	// Default: "10mm".
+	// E.g.: "10mm".
 	MarginLeft string `json:"marginLeft" yaml:"marginLeft"`
 
 	// Size of the right margin. (e.g. "2cm")
