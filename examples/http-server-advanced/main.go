@@ -21,7 +21,7 @@ func init() {
 var run = make(chan func())
 
 func main() {
-	// Initialize go-wkhtmltopdf library.
+	// Initialize library.
 	if err := pdf.Init(); err != nil {
 		log.Fatal(err)
 	}
