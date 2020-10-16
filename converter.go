@@ -7,7 +7,6 @@ package pdf
 #include <wkhtmltox/pdf.h>
 */
 import "C"
-
 import (
 	"bytes"
 	"errors"
@@ -76,81 +75,81 @@ const (
 type ConverterOpts struct {
 	// The paper size of the output document.
 	// E.g.: A4.
-	PaperSize PaperSize
+	PaperSize PaperSize `json:"paperSize" yaml:"paperSize"`
 
 	// The width of the output document.
 	// E.g.: "4cm".
-	Width string
+	Width string `json:"width" yaml:"width"`
 
 	// The height of the output document.
 	// E.g. "12in".
-	Height string
+	Height string `json:"height" yaml:"height"`
 
 	// The orientation of the output document.
 	// E.g.: Potrait.
-	Orientation Orientation
+	Orientation Orientation `json:"orientation" yaml:"orientation"`
 
 	// The color mode of the output document.
 	// E.g.: Color.
-	Colorspace Colorspace
+	Colorspace Colorspace `json:"colorspace" yaml:"colorspace"`
 
 	// DPI of the output document.
 	// E.g.: 96.
-	DPI uint64
+	DPI uint64 `json:"dpi" yaml:"dpi"`
 
 	// A number added to all page numbers when rendering headers, footers and
 	// tables of contents.
-	PageOffset int64
+	PageOffset int64 `json:"pageOffset" yaml:"pageOffset"`
 
 	// Copies of the converted documents to be included in the output document.
 	// E.g.: 1.
-	Copies uint64
+	Copies uint64 `json:"copies" yaml:"copies"`
 
 	// Specifies whether copies should be collated.
-	Collate bool
+	Collate bool `json:"collate" yaml:"collate"`
 
 	// The title of the output document.
-	Title string
+	Title string `json:"title" yaml:"title"`
 
 	// Specifies whether outlines should be generated for the output document.
-	GenerateOutline bool
+	GenerateOutline bool `json:"generateOutline" yaml:"generateOutline"`
 
 	// The maximum number of nesting levels in outlines.
 	// E.g.: 4.
-	OutlineDepth uint64
+	OutlineDepth uint64 `json:"outlineDepth" yaml:"outlineDepth"`
 
 	// A location to write an XML representation of the generated outlines.
-	OutlineDumpPath string
+	OutlineDumpPath string `json:"outlineDumpPath" yaml:"outlineDumpPath"`
 
 	// Specifies whether the conversion process should use lossless compression.
-	UseCompression bool
+	UseCompression bool `json:"useCompression" yaml:"useCompression"`
 
 	// Size of the top margin. (e.g. "2cm")
 	// E.g.: "1cm".
-	MarginTop string
+	MarginTop string `json:"marginTop" yaml:"marginTop"`
 
 	// Size of the bottom margin. (e.g. "2cm")
 	// E.g.: "1cm".
-	MarginBottom string
+	MarginBottom string `json:"marginBottom" yaml:"marginBottom"`
 
 	// Size of the left margin. (e.g. "2cm")
 	// Default: "10mm".
-	MarginLeft string
+	MarginLeft string `json:"marginLeft" yaml:"marginLeft"`
 
 	// Size of the right margin. (e.g. "2cm")
 	// E.g.: "10mm".
-	MarginRight string
+	MarginRight string `json:"marginRight" yaml:"marginRight"`
 
 	// The maximum number of DPI for the images in the output document.
 	// E.g.: 600.
-	ImageDPI uint64
+	ImageDPI uint64 `json:"imageDPI" yaml:"imageDPI"`
 
 	// The compression factor to use for the JPEG images in the output document.
 	// E.g.: 100 (range 0-100).
-	ImageQuality uint64
+	ImageQuality uint64 `json:"imageQuality" yaml:"imageQuality"`
 
 	// Path of the file used to load and store cookies for web objects.
-	CookieJarPath string
+	CookieJarPath string `json:"cookieJarPath" yaml:"cookieJarPath"`
 }
 
 // NewConverterOpts returns a new instance of converter options, configured
