@@ -220,7 +220,7 @@ type ObjectOpts struct {
 //   	FontSize: 12
 //   Footer:
 //   	Font:     "Arial"
-//   	FontSize: 12,
+//   	FontSize: 12
 func NewObjectOpts() *ObjectOpts {
 	return &ObjectOpts{
 		UseExternalLinks:  true,
@@ -333,8 +333,7 @@ func (o *Object) Destroy() {
 	// Remove temporary file.
 	if o.temporary && o.Location != "" {
 		os.Remove(o.Location)
-		o.Location = ""
-		o.temporary = false
+		o.Location, o.temporary = "", false
 	}
 
 	// Destroy settings.

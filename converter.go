@@ -275,12 +275,6 @@ func (c *Converter) Run(w io.Writer) error {
 
 // Destroy releases all resources used by the converter.
 func (c *Converter) Destroy() {
-	// Destroy converter objects.
-	for _, o := range c.objects {
-		o.Destroy()
-	}
-	c.objects = nil
-
 	// Destroy settings.
 	if c.settings != nil {
 		C.wkhtmltopdf_destroy_global_settings(c.settings)
@@ -292,6 +286,12 @@ func (c *Converter) Destroy() {
 		C.wkhtmltopdf_destroy_converter(c.converter)
 		c.converter = nil
 	}
+
+	// Destroy converter objects.
+	for _, o := range c.objects {
+		o.Destroy()
+	}
+	c.objects = nil
 }
 
 func (c *Converter) setOption(name, value string) error {
