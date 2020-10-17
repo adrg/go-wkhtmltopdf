@@ -1,6 +1,6 @@
 ## Overview
 
-The example showcases a web page to PDF conversion server.
+The example showcases a configurable web page to PDF conversion server.
 
 **The problem**
 
@@ -33,10 +33,21 @@ go run main.go
 **Make a conversion request.**
 
 ```bash
-curl --output OUTPUT.pdf 127.0.0.1:8080?url=PAGE_URL
-
-# Example:
-curl --output google.pdf 127.0.0.1:8080?url=https://google.com
+curl -H "Content-Type: application/json" -X POST \
+    -o google.pdf 127.0.0.1:8080 \
+    -d'{
+	"converterOpts": {
+		"title": "google.com",
+		"paperSize": "A4",
+		"orientation": "Portrait"
+	},
+	"objectOpts": {
+		"location": "https://google.com",
+		"footer": {
+			"contentCenter": "[page]"
+		}
+	}
+}'
 ```
 
-The same can be achieved by making a `GET` request through a web browser.
+See full list of options at [https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf](https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf).

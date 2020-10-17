@@ -7,7 +7,6 @@ package pdf
 #include <wkhtmltox/pdf.h>
 */
 import "C"
-
 import (
 	"bytes"
 	"errors"
@@ -72,117 +71,162 @@ const (
 	Tabloid   PaperSize = "Tabloid"   // 279.4 x 431.8 mm
 )
 
-// Converter represents an HTML to PDF converter. The contained settings are
-// applied to all converted objects.
-type Converter struct {
+// ConverterOpts defines a set of options to be used in the conversion process.
+type ConverterOpts struct {
 	// The paper size of the output document.
-	PaperSize PaperSize
+	// E.g.: A4.
+	PaperSize PaperSize `json:"paperSize" yaml:"paperSize"`
 
-	// The width of the output document. (e.g. "4cm")
-	Width string
+	// The width of the output document.
+	// E.g.: "4cm".
+	Width string `json:"width" yaml:"width"`
 
-	// The height of the output document. (e.g. "12in")
-	Height string
+	// The height of the output document.
+	// E.g. "12in".
+	Height string `json:"height" yaml:"height"`
 
 	// The orientation of the output document.
-	Orientation Orientation
+	// E.g.: Portrait.
+	Orientation Orientation `json:"orientation" yaml:"orientation"`
 
 	// The color mode of the output document.
-	Colorspace Colorspace
+	// E.g.: Color.
+	Colorspace Colorspace `json:"colorspace" yaml:"colorspace"`
 
 	// DPI of the output document.
-	// Default: 96.
-	DPI uint64
+	// E.g.: 96.
+	DPI uint64 `json:"dpi" yaml:"dpi"`
 
 	// A number added to all page numbers when rendering headers, footers and
 	// tables of contents.
-	// Default: 0.
-	PageOffset int64
+	PageOffset int64 `json:"pageOffset" yaml:"pageOffset"`
 
 	// Copies of the converted documents to be included in the output document.
-	// Default: 1.
-	Copies uint64
+	// E.g.: 1.
+	Copies uint64 `json:"copies" yaml:"copies"`
 
 	// Specifies whether copies should be collated.
-	// Default: true.
-	Collate bool
+	Collate bool `json:"collate" yaml:"collate"`
 
 	// The title of the output document.
-	Title string
+	Title string `json:"title" yaml:"title"`
 
 	// Specifies whether outlines should be generated for the output document.
-	// Default: true.
-	GenerateOutline bool
+	GenerateOutline bool `json:"generateOutline" yaml:"generateOutline"`
 
 	// The maximum number of nesting levels in outlines.
-	// Default: 4.
-	OutlineDepth uint64
+	// E.g.: 4.
+	OutlineDepth uint64 `json:"outlineDepth" yaml:"outlineDepth"`
 
 	// A location to write an XML representation of the generated outlines.
-	OutlineDumpPath string
+	OutlineDumpPath string `json:"outlineDumpPath" yaml:"outlineDumpPath"`
 
 	// Specifies whether the conversion process should use lossless compression.
-	// Default: true.
-	UseCompression bool
+	UseCompression bool `json:"useCompression" yaml:"useCompression"`
 
 	// Size of the top margin. (e.g. "2cm")
-	// Default: 0.
-	MarginTop string
+	// E.g.: "1cm".
+	MarginTop string `json:"marginTop" yaml:"marginTop"`
 
 	// Size of the bottom margin. (e.g. "2cm")
-	// Default: 0.
-	MarginBottom string
+	// E.g.: "1cm".
+	MarginBottom string `json:"marginBottom" yaml:"marginBottom"`
 
 	// Size of the left margin. (e.g. "2cm")
-	// Default: "10mm".
-	MarginLeft string
+	// E.g.: "10mm".
+	MarginLeft string `json:"marginLeft" yaml:"marginLeft"`
 
 	// Size of the right margin. (e.g. "2cm")
-	// Default: "10mm".
-	MarginRight string
+	// E.g.: "10mm".
+	MarginRight string `json:"marginRight" yaml:"marginRight"`
 
 	// The maximum number of DPI for the images in the output document.
-	// Default: 600.
-	ImageDPI uint64
+	// E.g.: 600.
+	ImageDPI uint64 `json:"imageDPI" yaml:"imageDPI"`
 
 	// The compression factor to use for the JPEG images in the output document.
-	// Default: 100 (range 0-100).
-	ImageQuality uint64
+	// E.g.: 100 (range 0-100).
+	ImageQuality uint64 `json:"imageQuality" yaml:"imageQuality"`
 
 	// Path of the file used to load and store cookies for web objects.
-	CookieJarPath string
-
-	converter *C.wkhtmltopdf_converter
-	settings  *C.wkhtmltopdf_global_settings
-	objects   []*Object
+	CookieJarPath string `json:"cookieJarPath" yaml:"cookieJarPath"`
 }
 
-// NewConverter returns a new converter instance.
-func NewConverter() (*Converter, error) {
-	settings := C.wkhtmltopdf_create_global_settings()
-	if settings == nil {
-		return nil, errors.New("could not create converter settings")
-	}
-
-	converter := C.wkhtmltopdf_create_converter(settings)
-	if converter == nil {
-		return nil, errors.New("could not create converter")
-	}
-
-	return &Converter{
-		converter:       converter,
-		settings:        settings,
+// NewConverterOpts returns a new instance of converter options, configured
+// using sensible defaults.
+//
+//   Defaults options:
+//
+//   PaperSize:       A4
+//   Orientation:     Portrait
+//   Colorspace:      Color
+//   DPI:             96
+//   Copies:          1
+//   Collate:         true
+//   GenerateOutline: true
+//   OutlineDepth:    4
+//   UseCompression:  true
+//   MarginLeft:      "10mm"
+//   MarginRight:     "10mm"
+//   ImageDPI:        600
+//   ImageQuality:    100
+func NewConverterOpts() *ConverterOpts {
+	return &ConverterOpts{
+		PaperSize:       A4,
 		Orientation:     Portrait,
 		Colorspace:      Color,
 		DPI:             96,
 		Copies:          1,
 		Collate:         true,
 		GenerateOutline: true,
+		OutlineDepth:    4,
 		UseCompression:  true,
 		MarginLeft:      "10mm",
 		MarginRight:     "10mm",
 		ImageDPI:        600,
 		ImageQuality:    100,
+	}
+}
+
+// Converter represents an HTML to PDF converter. The contained options are
+// applied to all converted objects.
+type Converter struct {
+	*ConverterOpts
+	converter *C.wkhtmltopdf_converter
+	settings  *C.wkhtmltopdf_global_settings
+	objects   []*Object
+}
+
+// NewConverter returns a new converter instance, configured using sensible
+// defaults. See NewConverterOpts for the default options.
+func NewConverter() (*Converter, error) {
+	return NewConverterWithOpts(nil)
+}
+
+// NewConverterWithOpts returns a new converter instance, configured using the
+// specified options. If no options are provided, sensible defaults are used.
+// See NewConverterOpts for the default options.
+func NewConverterWithOpts(opts *ConverterOpts) (*Converter, error) {
+	if opts == nil {
+		opts = NewConverterOpts()
+	}
+
+	// Create converter settings.
+	settings := C.wkhtmltopdf_create_global_settings()
+	if settings == nil {
+		return nil, errors.New("could not create converter settings")
+	}
+
+	// Create converter.
+	converter := C.wkhtmltopdf_create_converter(settings)
+	if converter == nil {
+		return nil, errors.New("could not create converter")
+	}
+
+	return &Converter{
+		ConverterOpts: opts,
+		converter:     converter,
+		settings:      settings,
 	}, nil
 }
 
@@ -231,8 +275,16 @@ func (c *Converter) Run(w io.Writer) error {
 
 // Destroy releases all resources used by the converter.
 func (c *Converter) Destroy() {
-	if c.converter == nil {
-		return
+	// Destroy settings.
+	if c.settings != nil {
+		C.wkhtmltopdf_destroy_global_settings(c.settings)
+		c.settings = nil
+	}
+
+	// Destroy converter.
+	if c.converter != nil {
+		C.wkhtmltopdf_destroy_converter(c.converter)
+		c.converter = nil
 	}
 
 	// Destroy converter objects.
@@ -240,10 +292,6 @@ func (c *Converter) Destroy() {
 		o.Destroy()
 	}
 	c.objects = nil
-
-	// Destroy converter.
-	C.wkhtmltopdf_destroy_converter(c.converter)
-	c.converter = nil
 }
 
 // SetOption is the low-level API to set options.
