@@ -71,7 +71,7 @@ func main() {
 	}
 	raw := output.Bytes()
 
-	err = ioutil.WriteFile("ex1.pdf", raw, 0644)
+	err = ioutil.WriteFile("out.pdf", raw, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
