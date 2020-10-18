@@ -8,15 +8,14 @@ import (
 	"net/http"
 )
 
-// ConvertOptions encapsulates wkhtmltopdf's converter and object options
-type ConvertOptions struct {
-	URL              string            `json:"url"`
-	ConverterOptions map[string]string `json:"converterOptions"`
-	ObjectOptions    map[string]string `json:"objectOptions"`
+// ConvertRequest encapsulates wkhtmltopdf's converter and object options
+type ConvertRequest struct {
+	ConverterOpts *ConverterOpts `json:"converterOpts"`
+	ObjectOpts    *ObjectOpts    `json:"objectOpts"`
 }
 
 // ConvertRequestChannel receives request for convertion
-var ConvertRequestChannel = make(chan ConvertOptions)
+var ConvertRequestChannel = make(chan ConvertRequest)
 
 // ConvertResponseChannel delivers converted content
 var ConvertResponseChannel = make(chan []byte)
@@ -41,16 +40,16 @@ func StartConvertLoop() {
 
 	for !stopConvertLoop {
 		log.Println("Waiting for convertion request...")
-		options := <-ConvertRequestChannel
-		log.Println("Received a convertion request for:", options.URL)
+		request := <-ConvertRequestChannel
+		log.Println("Received a convertion request for:", request.ObjectOpts.Location)
 
-		content, err := convert(options)
+		content, err := convert(request)
 		if err != nil {
-			log.Println("Failed to convert:", options.URL)
+			log.Println("Failed to convert:", request.ObjectOpts.Location)
 			ConvertResponseChannel <- nil
 		}
 
-		log.Println("Sending PDF content:", options.URL)
+		log.Println("Sending PDF content:", request.ObjectOpts.Location)
 		ConvertResponseChannel <- content
 	}
 
@@ -75,8 +74,11 @@ func ConvertPostHandler(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	defer r.Body.Close()
 
-	var options ConvertOptions
-	if err := decoder.Decode(&options); err != nil {
+	request := ConvertRequest{
+		ConverterOpts: NewConverterOpts(),
+		ObjectOpts:    NewObjectOpts(),
+	}
+	if err := decoder.Decode(&request); err != nil {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			body = make([]byte, 0, 0)
@@ -85,10 +87,10 @@ func ConvertPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println("Requesting for convert:", options.URL)
-	ConvertRequestChannel <- options
+	log.Println("Requesting for convert:", request.ObjectOpts.Location)
+	ConvertRequestChannel <- request
 	content := <-ConvertResponseChannel
-	log.Println("Received response for:", options.URL)
+	log.Println("Received response for:", request.ObjectOpts.Location)
 
 	if content == nil {
 		respondWithText(w, r, http.StatusInternalServerError, "Failed to convert file")
@@ -110,24 +112,19 @@ func respondWithPDF(w http.ResponseWriter, r *http.Request, statusCode int, payl
 	w.Write(payload)
 }
 
-func convert(opt ConvertOptions) ([]byte, error) {
+func convert(request ConvertRequest) ([]byte, error) {
 	// Create object from url
-	object, err := NewObject(opt.URL)
+	object, err := NewObjectWithOpts(request.ObjectOpts)
 	if err != nil {
-		log.Println("Could not create object for", opt.URL)
+		log.Println("Could not create object for", request.ObjectOpts.Location)
 		return nil, err
 	}
-	log.Println("Object URL:", opt.URL)
-
-	// Add object options
-	for k, v := range opt.ObjectOptions {
-		object.SetOption(k, v)
-	}
+	log.Println("Object URL:", request.ObjectOpts.Location)
 
 	// Create converter
-	converter, err := NewConverter()
+	converter, err := NewConverterWithOpts(request.ConverterOpts)
 	if err != nil {
-		log.Println("Could not create converter for", opt.URL)
+		log.Println("Could not create converter for", request.ObjectOpts.Location)
 		return nil, err
 	}
 	defer converter.Destroy()
@@ -135,20 +132,15 @@ func convert(opt ConvertOptions) ([]byte, error) {
 	// Add created object to the converter
 	converter.Add(object)
 
-	// Add converter options
-	for k, v := range opt.ConverterOptions {
-		converter.SetOption(k, v)
-	}
-
 	// Convert the objects and get the output PDF document
 	output := new(bytes.Buffer)
 	err = converter.Run(output)
 	if err != nil {
-		log.Println("Could not convert object to PDF:", opt.URL)
+		log.Println("Could not convert object to PDF:", request.ObjectOpts.Location)
 		return nil, err
 	}
 	raw := output.Bytes()
-	log.Println("PDF", len(raw), "bytes of size:", opt.URL)
+	log.Println("PDF", len(raw), "bytes of size:", request.ObjectOpts.Location)
 
 	return raw, nil
 }

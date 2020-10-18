@@ -4,30 +4,31 @@ package main
 Test payloads:
 
 {
-    "url": "http://www.google.com",
-	"converterOptions": {
-	    "margin.left": "10mm",
-	    "margin.right": "10mm",
-	    "margin.top": "10mm",
-	    "margin.bottom": "10mm"
+	"converterOpts": {
+	    "marginLeft": "10mm",
+	    "marginRight": "10mm",
+	    "marginTop": "10mm",
+	    "marginBottom": "10mm",
+        "outlineDepth": 0
 	},
-	"objectOptions": {
+	"objectOpts": {
+        "location": "http://www.google.com"
 	}
 }
 
 {
-    "url": "sample1.html",
-	"converterOptions": {
-	    "margin.left": "10mm",
-	    "margin.right": "10mm",
-	    "margin.top": "10mm",
-	    "margin.bottom": "10mm"
+	"converterOpts": {
+	    "marginLeft": "10mm",
+	    "marginRight": "10mm",
+	    "marginTop": "10mm",
+	    "marginBottom": "10mm",
+        "outlineDepth": 0
 	},
-	"objectOptions": {
-		"load.windowStatus": "ready"
+	"objectOpts": {
+        "location": "sample1.html",
+		"windowStatus": "ready"
 	}
-}
-*/
+}*/
 
 import (
 	"log"

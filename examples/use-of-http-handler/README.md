@@ -13,15 +13,16 @@ And on a second one:
 ```
 $ curl -i -XPOST -o sample1.pdf http://localhost:7070 -d'
 {
-    "url": "sample1.html",
-	"converterOptions": {
-	    "margin.left": "10mm",
-	    "margin.right": "10mm",
-	    "margin.top": "10mm",
-	    "margin.bottom": "10mm"
+	"converterOpts": {
+	    "marginLeft": "10mm",
+	    "marginRight": "10mm",
+	    "marginTop": "10mm",
+	    "marginBottom": "10mm",
+        "outlineDepth": 0
 	},
-	"objectOptions": {
-		"load.windowStatus": "ready"
+	"objectOpts": {
+        "location": "sample1.html",
+		"windowStatus": "ready"
 	}
 }
 '
