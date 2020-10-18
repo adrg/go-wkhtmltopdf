@@ -4,6 +4,7 @@ go-wkhtmltopdf
 [![pkg.go.dev documentation](https://pkg.go.dev/badge/github.com/adrg/go-wkhtmltopdf)](https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf)
 [![MIT license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Go report card](https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf)](https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf)
+[![Discord channel](https://img.shields.io/discord/767381740427542588?label=discord)](https://discord.gg/Jd63kBf)
 [![GitHub issues](https://img.shields.io/github/issues/adrg/go-wkhtmltopdf)](https://github.com/adrg/go-wkhtmltopdf/issues)
 [![Buy me a coffee](https://img.shields.io/static/v1.svg?label=%20&message=Buy%20me%20a%20coffee&color=FF813F&logo=buy%20me%20a%20coffee&logoColor=white)](https://www.buymeacoffee.com/adrg)
 [![GitHub stars](https://img.shields.io/github/stars/adrg/go-wkhtmltopdf?style=social)](https://github.com/adrg/go-wkhtmltopdf/stargazers)
