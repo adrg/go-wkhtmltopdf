@@ -1,13 +1,37 @@
-go-wkhtmltopdf
-==============
-[![Build Status](https://github.com/adrg/go-wkhtmltopdf/workflows/CI/badge.svg)](https://github.com/adrg/go-wkhtmltopdf/actions?query=workflow%3ACI)
-[![pkg.go.dev documentation](https://pkg.go.dev/badge/github.com/adrg/go-wkhtmltopdf)](https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf)
-[![MIT license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Go report card](https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf)](https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf)
-[![Discord channel](https://img.shields.io/discord/767381740427542588?label=discord)](https://discord.gg/Jd63kBf)
-[![GitHub issues](https://img.shields.io/github/issues/adrg/go-wkhtmltopdf)](https://github.com/adrg/go-wkhtmltopdf/issues)
-[![Buy me a coffee](https://img.shields.io/static/v1.svg?label=%20&message=Buy%20me%20a%20coffee&color=FF813F&logo=buy%20me%20a%20coffee&logoColor=white)](https://www.buymeacoffee.com/adrg)
-[![GitHub stars](https://img.shields.io/github/stars/adrg/go-wkhtmltopdf?style=social)](https://github.com/adrg/go-wkhtmltopdf/stargazers)
+<h1 align="center">
+  <div>
+    <img src="https://raw.githubusercontent.com/adrg/adrg.github.io/master/assets/projects/go-wkhtmltopdf/logo.png" height="60px" alt="go-wkhtmltopdf logo"/>
+  </div>
+</h1>
+
+<h3 align="center">wkhtmltopdf Go bindings and high level interface for HTML to PDF conversion.</h3>
+
+<p align="center">
+    <a href="https://github.com/adrg/go-wkhtmltopdf/actions?query=workflow%3ACI">
+        <img alt="Build status" src="https://github.com/adrg/go-wkhtmltopdf/workflows/CI/badge.svg">
+    </a>
+    <a href="https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf">
+        <img alt="pkg.go.dev documentation" src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white">
+    </a>
+    <a href="https://opensource.org/licenses/MIT" rel="nofollow">
+        <img alt="MIT license" src="https://img.shields.io/github/license/adrg/go-wkhtmltopdf"/>
+    </a>
+    <a href="https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf">
+        <img alt="Go report card" src="https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf" />
+    </a>
+    <a href="https://discord.gg/Jd63kBf">
+        <img alt="Discord channel" src="https://img.shields.io/discord/767381740427542588?label=discord" />
+    </a>
+    <a href="https://github.com/adrg/go-wkhtmltopdf/issues">
+        <img alt="GitHub issues" src="https://img.shields.io/github/issues/adrg/go-wkhtmltopdf">
+    </a>
+    <a href="https://www.buymeacoffee.com/adrg">
+        <img alt="Buy me a coffee" src="https://img.shields.io/static/v1.svg?label=%20&message=Buy%20me%20a%20coffee&color=FF813F&logo=buy%20me%20a%20coffee&logoColor=white"/>
+    </a>
+    <a alt="Github stars" href="https://github.com/adrg/go-wkhtmltopdf/stargazers">
+        <img alt="GitHub stars" src="https://img.shields.io/github/stars/adrg/go-wkhtmltopdf?style=social">
+    </a>
+</p>
 
 Implements [wkhtmltopdf](https://wkhtmltopdf.org) Go bindings. It can be used to convert HTML documents to PDF files.
 The package does not use the `wkhtmltopdf` binary. Instead, it uses the `wkhtmltox` library directly.
