@@ -1,3 +1,6 @@
+# Use this Makefile during development/contribution (i.e. from you forked repo),
+# if you want to. Otherwise, ignore it, and do it as you like.
+
 PKG_SRC_PATH := $(GOPATH)/src/github.com/adrg/go-wkhtmltopdf
 
 deploy:
