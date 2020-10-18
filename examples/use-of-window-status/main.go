@@ -6,8 +6,7 @@ import (
 	"log"
 	"os"
 
-	pdf "github.com/leandrosilva/go-wkhtmltopdf" // <- This is what I use on my machine
-	// pdf "github.com/adrg/go-wkhtmltopdf"         <- You may want to use this instead
+	pdf "github.com/adrg/go-wkhtmltopdf"
 )
 
 func main() {

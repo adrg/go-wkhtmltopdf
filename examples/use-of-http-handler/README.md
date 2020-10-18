@@ -6,8 +6,7 @@ This example consists of a **HTTP server** who accepts request to generate PDF f
 
 At one terminal:
 
-    $ make build
-    $ make run
+    $ go run main.go
 
 And on a second one:
 

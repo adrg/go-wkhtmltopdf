@@ -35,9 +35,8 @@ import (
 	"runtime"
 	"time"
 
+	pdf "github.com/adrg/go-wkhtmltopdf"
 	"github.com/gorilla/mux"
-	pdf "github.com/leandrosilva/go-wkhtmltopdf" // <- This is what I use on my machine
-	// pdf "github.com/adrg/go-wkhtmltopdf"         <- You may want to use this instead
 )
 
 func init() {

@@ -127,51 +127,6 @@ func main() {
 }
 ```
 
-## How to install, build and run those shipped examples
-
-Even though this is a very simple process, we've got a Makefile to help us do it over and over without much typing.
-
-### 1: Clone this repo
-
-	git clone https://github.com/adrg/go-wkhtmltopdf.git
-
-Great! Thanks for cloning. Now go ahead and change to the project directory.
-
-	cd go-wkhtmltopdf
-
-### 2: Bring in your own wkhtmltox library
-
-If you want to bring in your wkhtmltox library, just copy the files to the **./wkhtmltox** directory and you are good to go. Otherwise, skip this step.
-
-Also you might want (or have) to provide environment variable `CGO_LDFLAGS` depending on your operational system, etc. Just keep that in mind. And if you need some help, please, refer to [cgo doc](https://golang.org/cmd/cgo/).
-
-### 3: Setup Makefile
-
-	export PKG_SRC_PATH=$GOPATH/src/github.com/adrg/go-wkhtmltopdf
-
-What you want to do is to set this variable to your actual $GOPATH and package source path as well. This depends on the repository you cloned.
-
-### 4: Install this package
-
-	make install
-
-This is going to copy this directory to your $GOPATH source structure and **go install** it, making it available to your own programs to use it.
-
-### 5: Build an example
-
-	cd ./examples/usage-with-local-pages
-	make build
-
-As result of this command you going to get a **ex1.exe** file in ths very directory.
-
-### 6: Finally, run it
-
-	make run
-
-Instead of this command, you can simply fire **./ex1.exe**, which is going to result in the **example.pdf** file.
-
-Voilà!
-
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/adrg/go-wkhtmltopdf.svg)](https://starchart.cc/adrg/go-wkhtmltopdf)
