@@ -164,7 +164,6 @@ type ConverterOpts struct {
 //   Copies:          1
 //   Collate:         true
 //   GenerateOutline: true
-//   OutlineDepth:    4
 //   UseCompression:  true
 //   MarginLeft:      "10mm"
 //   MarginRight:     "10mm"
@@ -179,7 +178,6 @@ func NewConverterOpts() *ConverterOpts {
 		Copies:          1,
 		Collate:         true,
 		GenerateOutline: true,
-		OutlineDepth:    4,
 		UseCompression:  true,
 		MarginLeft:      "10mm",
 		MarginRight:     "10mm",
