@@ -1,6 +1,6 @@
 <h1 align="center">
   <div>
-    <img src="https://raw.githubusercontent.com/adrg/adrg.github.io/master/assets/projects/go-wkhtmltopdf/logo.png" height="60px" alt="go-wkhtmltopdf logo"/>
+    <img src="https://raw.githubusercontent.com/adrg/adrg.github.io/master/assets/projects/go-wkhtmltopdf/logo.png" height="45px" alt="go-wkhtmltopdf logo"/>
   </div>
 </h1>
 
