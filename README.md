@@ -25,11 +25,8 @@
     <a href="https://github.com/adrg/go-wkhtmltopdf/issues">
         <img alt="GitHub issues" src="https://img.shields.io/github/issues/adrg/go-wkhtmltopdf">
     </a>
-    <a href="https://www.buymeacoffee.com/adrg">
-        <img alt="Buy me a coffee" src="https://img.shields.io/static/v1.svg?label=%20&message=Buy%20me%20a%20coffee&color=FF813F&logo=buy%20me%20a%20coffee&logoColor=white"/>
-    </a>
-    <a alt="Github stars" href="https://github.com/adrg/go-wkhtmltopdf/stargazers">
-        <img alt="GitHub stars" src="https://img.shields.io/github/stars/adrg/go-wkhtmltopdf?style=social">
+    <a href="https://ko-fi.com/T6T72WATK">
+        <img alt="Buy me a coffee" src="https://img.shields.io/static/v1.svg?label=%20&message=Buy%20me%20a%20coffee&color=579fbf&logo=buy%20me%20a%20coffee&logoColor=white"/>
     </a>
 </p>
 
@@ -154,7 +151,7 @@ func main() {
 
 Contributions in the form of pull requests, issues or just general feedback,
 are always welcome.
-See [CONTRIBUTING.MD](https://github.com/adrg/go-wkhtmltopdf/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING.MD](CONTRIBUTING.md).
 
 **Contributors**:
 [adrg](https://github.com/adrg),
@@ -165,16 +162,9 @@ See [CONTRIBUTING.MD](https://github.com/adrg/go-wkhtmltopdf/blob/master/CONTRIB
 For more information see the [wkhtmltopdf documentation](https://wkhtmltopdf.org/usage/wkhtmltopdf.txt)
 and the [wkhtmltox documentation](https://wkhtmltopdf.org/libwkhtmltox).
 
-## Buy me a coffee
-
-If you found this project useful and want to support it, consider buying me a coffee.  
-<a href="https://www.buymeacoffee.com/adrg">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/arial-orange.png" alt="Buy Me A Coffee" height="42px">
-</a>
-
 ## License
 
 Copyright (c) 2016 Adrian-George Bostan.
 
 This project is licensed under the [MIT license](https://opensource.org/licenses/MIT).
-See [LICENSE](https://github.com/adrg/go-wkhtmltopdf/blob/master/LICENSE) for more details.
+See [LICENSE](LICENSE) for more details.
