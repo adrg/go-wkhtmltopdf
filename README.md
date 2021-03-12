@@ -49,11 +49,8 @@ for multiple operating systems can be found at
 [https://builds.wkhtmltopdf.org](https://wkhtmltopdf.org/downloads.html) and
 [https://github.com/wkhtmltopdf/packaging/releases](https://github.com/wkhtmltopdf/packaging/releases).
 
-On Debian based distributions, use `dpkg` to install the downloaded installation package.
-```
-sudo dpkg -i wkhtmltox.deb
-sudo ldconfig
-```
+- [Install on Linux](https://github.com/adrg/go-wkhtmltopdf/wiki/Install-on-Linux)
+- [Install on Windows](https://github.com/adrg/go-wkhtmltopdf/wiki/Install-on-Windows)
 
 ## Installation
     go get github.com/adrg/go-wkhtmltopdf
