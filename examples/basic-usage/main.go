@@ -27,10 +27,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	object.Footer.ContentLeft = "[date]"
-	object.Footer.ContentCenter = "Sample footer information"
-	object.Footer.ContentRight = "[page]"
-	object.Footer.DisplaySeparator = true
+	object2.Footer.ContentLeft = "[date]"
+	object2.Footer.ContentCenter = "Sample footer information"
+	object2.Footer.ContentRight = "[page]"
+	object2.Footer.DisplaySeparator = true
 
 	// Create object from reader.
 	inFile, err := os.Open("sample2.html")
