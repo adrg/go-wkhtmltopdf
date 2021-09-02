@@ -45,10 +45,9 @@ Full documentation can be found at: https://pkg.go.dev/github.com/adrg/go-wkhtml
 ## Prerequisites
 
 In order to use the package, `wkhtmltox` must be installed. Installation packages
-for multiple operating systems can be found at
-[https://builds.wkhtmltopdf.org](https://wkhtmltopdf.org/downloads.html) and
-[https://github.com/wkhtmltopdf/packaging/releases](https://github.com/wkhtmltopdf/packaging/releases).
+for multiple operating systems can be found at [https://builds.wkhtmltopdf.org](https://wkhtmltopdf.org/downloads.html).
 
+Please see the wiki pages of this project for detailed installation instructions.
 - [Install on Linux](https://github.com/adrg/go-wkhtmltopdf/wiki/Install-on-Linux)
 - [Install on Windows](https://github.com/adrg/go-wkhtmltopdf/wiki/Install-on-Windows)
 
