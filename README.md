@@ -1,10 +1,10 @@
 <h1 align="center">
   <div>
-    <img src="https://raw.githubusercontent.com/adrg/adrg.github.io/master/assets/projects/go-wkhtmltopdf/logo.png" height="45px" alt="go-wkhtmltopdf logo"/>
+    <img src="https://raw.githubusercontent.com/adrg/adrg.github.io/master/assets/projects/go-wkhtmltopdf/logo.svg" alt="go-wkhtmltopdf logo"/>
   </div>
 </h1>
 
-<h3 align="center">wkhtmltopdf Go bindings and high level interface for HTML to PDF conversion.</h3>
+<h3 align="center">Go bindings and high-level interface for HTML to PDF conversion.</h3>
 
 <p align="center">
     <a href="https://github.com/adrg/go-wkhtmltopdf/actions?query=workflow%3ACI">
@@ -33,7 +33,7 @@
 Implements [wkhtmltopdf](https://wkhtmltopdf.org) Go bindings. It can be used to convert HTML documents to PDF files.
 The package does not use the `wkhtmltopdf` binary. Instead, it uses the `wkhtmltox` library directly.
 
-Full documentation can be found at: https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf.
+Full documentation can be found at https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf.
 
 **Examples**
 
