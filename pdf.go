@@ -118,6 +118,6 @@ func HasPatchedQT() bool {
 
 // Destroy releases all the resources used by the library.
 func Destroy() {
-	C.wkhtmltopdf_deinit()
 	objects = nil
+	C.wkhtmltopdf_deinit()
 }

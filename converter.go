@@ -216,16 +216,19 @@ func NewConverterWithOpts(opts *ConverterOpts) (*Converter, error) {
 	}
 
 	// Create converter.
-	converter := C.wkhtmltopdf_create_converter(settings)
-	if converter == nil {
+	cConverter := C.wkhtmltopdf_create_converter(settings)
+	if cConverter == nil {
 		return nil, errors.New("could not create converter")
 	}
 
-	return &Converter{
+	converter := &Converter{
 		ConverterOpts: opts,
-		converter:     converter,
+		converter:     cConverter,
 		settings:      settings,
-	}, nil
+	}
+
+	objects.add(objectID(cConverter), converter)
+	return converter, nil
 }
 
 // Add appends the specified object to the list of objects to be converted.
@@ -281,6 +284,7 @@ func (c *Converter) Destroy() {
 
 	// Destroy converter.
 	if c.converter != nil {
+		objects.remove(objectID(c.converter))
 		C.wkhtmltopdf_destroy_converter(c.converter)
 		c.converter = nil
 	}
