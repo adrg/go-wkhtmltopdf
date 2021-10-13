@@ -107,6 +107,12 @@ func Version() string {
 	return C.GoString(C.wkhtmltopdf_version())
 }
 
+// HasPatchedQT returns true if the library is built against the
+// wkhtmltopdf version of QT.
+func HasPatchedQT() bool {
+	return C.wkhtmltopdf_extended_qt() != 0
+}
+
 // Destroy releases all the resources used by the library.
 func Destroy() {
 	C.wkhtmltopdf_deinit()
