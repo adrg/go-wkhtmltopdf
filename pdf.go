@@ -93,12 +93,15 @@ package pdf
 import "C"
 import "errors"
 
+var objects *objectRegistry
+
 // Init initializes the library, allocating all necessary resources.
 func Init() error {
 	if C.wkhtmltopdf_init(0) != 1 {
 		return errors.New("could not initialize library")
 	}
 
+	objects = newObjectRegistry()
 	return nil
 }
 
@@ -116,4 +119,5 @@ func HasPatchedQT() bool {
 // Destroy releases all the resources used by the library.
 func Destroy() {
 	C.wkhtmltopdf_deinit()
+	objects = nil
 }

@@ -50,9 +50,3 @@ func (or *objectRegistry) remove(id objectID) {
 	delete(or.objects, id)
 	or.Unlock()
 }
-
-func (or *objectRegistry) clear() {
-	or.Lock()
-	or.objects = map[objectID]interface{}{}
-	or.Unlock()
-}
