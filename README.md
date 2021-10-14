@@ -38,6 +38,7 @@ Full documentation can be found at https://pkg.go.dev/github.com/adrg/go-wkhtmlt
 **Examples**
 
 * [Basic usage](examples/basic-usage/main.go)
+* [Converter callbacks](examples/converter-callbacks/main.go)
 * [Convert HTML document based on JSON input](examples/json-input/main.go)
 * [Basic web page to PDF conversion server](examples/http-server)
 * [Configurable web page to PDF conversion server](examples/http-server-advanced)
