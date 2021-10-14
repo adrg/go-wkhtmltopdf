@@ -15,7 +15,7 @@ extern void converterPhaseChangedCb(wkhtmltopdf_converter* converter);
 extern void converterProgressChangedCb(wkhtmltopdf_converter* converter, cint progress);
 extern void converterFinishedCb(wkhtmltopdf_converter* converter, cint status);
 
-static inline void initConverterCallbacks(wkhtmltopdf_converter* c) {
+static inline void converter_initialize_callbacks(wkhtmltopdf_converter* c) {
 	wkhtmltopdf_set_warning_callback(c, converterWarningCb);
 	wkhtmltopdf_set_error_callback(c, converterErrorCb);
 	wkhtmltopdf_set_phase_changed_callback(c, converterPhaseChangedCb);
@@ -262,7 +262,7 @@ func NewConverterWithOpts(opts *ConverterOpts) (*Converter, error) {
 	}
 
 	// Initialize converter callbacks.
-	C.initConverterCallbacks(cConverter)
+	C.converter_initialize_callbacks(cConverter)
 
 	// Retrieve conversion phases.
 	phaseCount := int(C.wkhtmltopdf_phase_count(cConverter))
