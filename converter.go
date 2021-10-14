@@ -212,11 +212,21 @@ type Converter struct {
 	objects   []*Object
 	phases    []string
 
-	Warning         func(msg string)
-	Error           func(msg string)
-	PhaseChanged    func(phaseIndex int)
+	// Warning is called when a warning is issued in the conversion process.
+	Warning func(msg string)
+
+	// Error is called when an error is encountered in the conversion process.
+	Error func(msg string)
+
+	// PhaseChanged is called when the conversion phase changes.
+	PhaseChanged func(phaseIndex int)
+
+	// ProgressChanged is called when the conversion progress changes.
+	// The progress is reported for each conversion phase.
 	ProgressChanged func(progressPercent int)
-	Finished        func(status int)
+
+	// Finished is called when the conversion process ends.
+	Finished func(status int)
 }
 
 // NewConverter returns a new converter instance, configured using sensible
