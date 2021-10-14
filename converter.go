@@ -266,9 +266,10 @@ func NewConverterWithOpts(opts *ConverterOpts) (*Converter, error) {
 
 	// Retrieve conversion phases.
 	phaseCount := int(C.wkhtmltopdf_phase_count(cConverter))
+
+	converter.phases = make([]string, phaseCount)
 	for i := 0; i < phaseCount; i++ {
-		converter.phases = append(converter.phases,
-			C.GoString(C.wkhtmltopdf_phase_description(cConverter, C.int(i))))
+		converter.phases[i] = C.GoString(C.wkhtmltopdf_phase_description(cConverter, C.int(i)))
 	}
 
 	// Add converter to object registry.
