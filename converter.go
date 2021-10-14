@@ -226,7 +226,7 @@ type Converter struct {
 	ProgressChanged func(progressPercent int)
 
 	// Finished is called when the conversion process ends.
-	Finished func(status int)
+	Finished func(success bool)
 }
 
 // NewConverter returns a new converter instance, configured using sensible
@@ -350,7 +350,7 @@ func (c *Converter) Phases() []string {
 // PhaseDescription returns the description of the phase with the specified
 // index. If the phase index is invalid, the method returns an empty string.
 func (c *Converter) PhaseDescription(phaseIndex int) string {
-	if phaseIndex > len(c.phases) {
+	if phaseIndex < 0 || phaseIndex >= len(c.phases) {
 		return ""
 	}
 
@@ -460,7 +460,7 @@ func converterProgressChangedCb(cConverter *C.wkhtmltopdf_converter, progress C.
 func converterFinishedCb(cConverter *C.wkhtmltopdf_converter, status C.int) {
 	converter := getConverterByID(objectID(cConverter))
 	if converter != nil && converter.Finished != nil {
-		converter.Finished(int(status))
+		converter.Finished(status == 1)
 	}
 }
 
