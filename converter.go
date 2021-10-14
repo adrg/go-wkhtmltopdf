@@ -5,6 +5,23 @@ package pdf
 #include <stdio.h>
 #include <stdlib.h>
 #include <wkhtmltox/pdf.h>
+
+typedef const char cchar;
+typedef const int cint;
+
+extern void converterWarningCb(wkhtmltopdf_converter* converter, cchar* msg);
+extern void converterErrorCb(wkhtmltopdf_converter* converter, cchar* msg);
+extern void converterPhaseChangedCb(wkhtmltopdf_converter* converter);
+extern void converterProgressChangedCb(wkhtmltopdf_converter* converter, cint progress);
+extern void converterFinishedCb(wkhtmltopdf_converter* converter, cint status);
+
+static inline void initConverterCallbacks(wkhtmltopdf_converter* c) {
+	wkhtmltopdf_set_warning_callback(c, converterWarningCb);
+	wkhtmltopdf_set_error_callback(c, converterErrorCb);
+	wkhtmltopdf_set_phase_changed_callback(c, converterPhaseChangedCb);
+	wkhtmltopdf_set_progress_changed_callback(c, converterProgressChangedCb);
+	wkhtmltopdf_set_finished_callback(c, converterFinishedCb);
+}
 */
 import "C"
 import (
@@ -193,6 +210,13 @@ type Converter struct {
 	converter *C.wkhtmltopdf_converter
 	settings  *C.wkhtmltopdf_global_settings
 	objects   []*Object
+	phases    []string
+
+	Warning         func(msg string)
+	Error           func(msg string)
+	PhaseChanged    func(phaseIndex int)
+	ProgressChanged func(progressPercent int)
+	Finished        func(status int)
 }
 
 // NewConverter returns a new converter instance, configured using sensible
@@ -227,7 +251,19 @@ func NewConverterWithOpts(opts *ConverterOpts) (*Converter, error) {
 		settings:      settings,
 	}
 
-	objects.add(objectID(cConverter), converter)
+	// Initialize converter callbacks.
+	C.initConverterCallbacks(cConverter)
+
+	// Retrieve conversion phases.
+	phaseCount := int(C.wkhtmltopdf_phase_count(cConverter))
+	for i := 0; i < phaseCount; i++ {
+		converter.phases = append(converter.phases,
+			C.GoString(C.wkhtmltopdf_phase_description(cConverter, C.int(i))))
+	}
+
+	// Add converter to object registry.
+	registry.add(objectID(cConverter), converter)
+
 	return converter, nil
 }
 
@@ -236,7 +272,7 @@ func (c *Converter) Add(object *Object) {
 	c.objects = append(c.objects, object)
 }
 
-// Run executes the conversion and copies the output to the provided writer.
+// Run performs the conversion and copies the output to the provided writer.
 func (c *Converter) Run(w io.Writer) error {
 	if c.converter == nil {
 		return errors.New("cannot use uninitialized or destroyed converter")
@@ -284,7 +320,7 @@ func (c *Converter) Destroy() {
 
 	// Destroy converter.
 	if c.converter != nil {
-		objects.remove(objectID(c.converter))
+		registry.remove(objectID(c.converter))
 		C.wkhtmltopdf_destroy_converter(c.converter)
 		c.converter = nil
 	}
@@ -294,6 +330,26 @@ func (c *Converter) Destroy() {
 		o.Destroy()
 	}
 	c.objects = nil
+}
+
+// Phases returns the list of phases undergone in the conversion process.
+func (c *Converter) Phases() []string {
+	return c.phases
+}
+
+// PhaseDescription returns the description of the phase with the specified
+// index. If the phase index is invalid, the method returns an empty string.
+func (c *Converter) PhaseDescription(phaseIndex int) string {
+	if phaseIndex > len(c.phases) {
+		return ""
+	}
+
+	return c.phases[phaseIndex]
+}
+
+// CurrentPhaseIndex returns the index of the current conversion phase.
+func (c *Converter) CurrentPhaseIndex() int {
+	return int(C.wkhtmltopdf_current_phase(c.converter))
 }
 
 func (c *Converter) setOption(name, value string) error {
@@ -356,4 +412,54 @@ func (c *Converter) setOptions() error {
 	}
 
 	return nil
+}
+
+//export converterWarningCb
+func converterWarningCb(cConverter *C.wkhtmltopdf_converter, msg *C.cchar) {
+	converter := getConverterByID(objectID(cConverter))
+	if converter != nil && converter.Warning != nil {
+		converter.Warning(C.GoString(msg))
+	}
+}
+
+//export converterErrorCb
+func converterErrorCb(cConverter *C.wkhtmltopdf_converter, msg *C.cchar) {
+	converter := getConverterByID(objectID(cConverter))
+	if converter != nil && converter.Error != nil {
+		converter.Error(C.GoString(msg))
+	}
+}
+
+//export converterPhaseChangedCb
+func converterPhaseChangedCb(cConverter *C.wkhtmltopdf_converter) {
+	converter := getConverterByID(objectID(cConverter))
+	if converter != nil && converter.PhaseChanged != nil {
+		converter.PhaseChanged(converter.CurrentPhaseIndex())
+	}
+}
+
+//export converterProgressChangedCb
+func converterProgressChangedCb(cConverter *C.wkhtmltopdf_converter, progress C.int) {
+	converter := getConverterByID(objectID(cConverter))
+	if converter != nil && converter.ProgressChanged != nil {
+		converter.ProgressChanged(int(progress))
+	}
+}
+
+//export converterFinishedCb
+func converterFinishedCb(cConverter *C.wkhtmltopdf_converter, status C.int) {
+	converter := getConverterByID(objectID(cConverter))
+	if converter != nil && converter.Finished != nil {
+		converter.Finished(int(status))
+	}
+}
+
+func getConverterByID(id objectID) *Converter {
+	object, ok := registry.get(id)
+	if !ok {
+		return nil
+	}
+
+	converter, _ := object.(*Converter)
+	return converter
 }
