@@ -4,7 +4,7 @@
   </div>
 </h1>
 
-<h3 align="center">Go bindings and high-level interface for HTML to PDF conversion.</h3>
+<h3 align="center">Go bindings and high-level HTML to PDF conversion interface.</h3>
 
 <p align="center">
     <a href="https://github.com/adrg/go-wkhtmltopdf/actions?query=workflow%3ACI">
@@ -147,7 +147,7 @@ func main() {
 ## Contributing
 
 Contributions in the form of pull requests, issues or just general feedback,
-are always welcome.
+are always welcome.  
 See [CONTRIBUTING.MD](CONTRIBUTING.md).
 
 **Contributors**:
