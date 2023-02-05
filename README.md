@@ -52,6 +52,8 @@ Please see the wiki pages of this project for detailed installation instructions
 - [Install on Linux](https://github.com/adrg/go-wkhtmltopdf/wiki/Install-on-Linux)
 - [Install on Windows](https://github.com/adrg/go-wkhtmltopdf/wiki/Install-on-Windows)
 
+> Note: `wkhtmltox` does not seem to be actively maintained. Please see the [project status](https://wkhtmltopdf.org/status.html) for more information, recommendations and future plans.
+
 ## Installation
     go get github.com/adrg/go-wkhtmltopdf
 
@@ -134,10 +136,12 @@ func main() {
 	}
 	defer outFile.Close()
 
+	// Run converter.
 	if err := converter.Run(outFile); err != nil {
 		log.Fatal(err)
 	}
 }
+
 ```
 
 ## Stargazers over time

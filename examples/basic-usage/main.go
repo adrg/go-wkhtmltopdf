@@ -74,6 +74,7 @@ func main() {
 	}
 	defer outFile.Close()
 
+	// Run converter.
 	if err := converter.Run(outFile); err != nil {
 		log.Fatal(err)
 	}
