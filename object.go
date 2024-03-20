@@ -10,7 +10,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"strings"
 	"unsafe"
@@ -283,7 +282,7 @@ func NewObjectWithOpts(opts *ObjectOpts) (*Object, error) {
 // The object is configured using sensible defaults. See NewObjectOpts for
 // the default options.
 func NewObjectFromReader(r io.Reader) (*Object, error) {
-	file, err := ioutil.TempFile("", "pdf-")
+	file, err := os.CreateTemp("", "pdf-")
 	if err != nil {
 		return nil, err
 	}
