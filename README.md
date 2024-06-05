@@ -7,8 +7,8 @@
 <h3 align="center">Go bindings and high-level HTML to PDF conversion interface.</h3>
 
 <p align="center">
-    <a href="https://github.com/adrg/go-wkhtmltopdf/actions?query=workflow%3ACI">
-        <img alt="Build status" src="https://github.com/adrg/go-wkhtmltopdf/workflows/CI/badge.svg">
+    <a href="https://github.com/adrg/go-wkhtmltopdf/actions/workflows/tests.yml">
+        <img alt="Tests status" src="https://github.com/adrg/go-wkhtmltopdf/actions/workflows/tests.yml/badge.svg">
     </a>
     <a href="https://pkg.go.dev/github.com/adrg/go-wkhtmltopdf">
         <img alt="pkg.go.dev documentation" src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white">
