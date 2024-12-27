@@ -55,7 +55,6 @@ Please see the wiki pages of this project for detailed installation instructions
 > Note: `wkhtmltox` does not seem to be actively maintained. Please see the [project status](https://wkhtmltopdf.org/status.html) for more information, recommendations and future plans.
 
 ## Installation
-
     go get github.com/adrg/go-wkhtmltopdf
 
 ## Usage
