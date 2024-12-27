@@ -172,20 +172,20 @@ type ConverterOpts struct {
 // NewConverterOpts returns a new instance of converter options, configured
 // using sensible defaults.
 //
-//	Defaults options:
+//   Defaults options:
 //
-//	PaperSize:       A4
-//	Orientation:     Portrait
-//	Colorspace:      Color
-//	DPI:             96
-//	Copies:          1
-//	Collate:         true
-//	GenerateOutline: true
-//	UseCompression:  true
-//	MarginLeft:      "10mm"
-//	MarginRight:     "10mm"
-//	ImageDPI:        600
-//	ImageQuality:    100
+//   PaperSize:       A4
+//   Orientation:     Portrait
+//   Colorspace:      Color
+//   DPI:             96
+//   Copies:          1
+//   Collate:         true
+//   GenerateOutline: true
+//   UseCompression:  true
+//   MarginLeft:      "10mm"
+//   MarginRight:     "10mm"
+//   ImageDPI:        600
+//   ImageQuality:    100
 func NewConverterOpts() *ConverterOpts {
 	return &ConverterOpts{
 		PaperSize:       A4,

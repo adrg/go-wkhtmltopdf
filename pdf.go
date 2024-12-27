@@ -3,7 +3,6 @@ Package pdf implements wkhtmltopdf Go bindings. It can be used to convert HTML d
 The package does not use the wkhtmltopdf binary. Instead, it uses the wkhtmltox library directly.
 
 Example
-
 	package main
 
 	import (
