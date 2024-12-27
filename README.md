@@ -63,8 +63,8 @@ Please see the wiki pages of this project for detailed installation instructions
 ## Usage
 
 > Note: All calls to the Converter.Run method must be performed on the main thread. This is a limitation of the
-> wkhtmltox library. Please see the one of the [HTTP server examples](examples/http-server) for an implementation
-> suggestion.
+> wkhtmltox library. Please see https://go.dev/wiki/LockOSThread or one fo the [HTTP examples](examples/http-server)
+> for more information.
 
 ```go
 package main
