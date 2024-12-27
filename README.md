@@ -49,12 +49,10 @@ In order to use the package, `wkhtmltox` must be installed. Installation package
 for multiple operating systems can be found at [https://builds.wkhtmltopdf.org](https://wkhtmltopdf.org/downloads.html).
 
 Please see the wiki pages of this project for detailed installation instructions.
-
 - [Install on Linux](https://github.com/adrg/go-wkhtmltopdf/wiki/Install-on-Linux)
 - [Install on Windows](https://github.com/adrg/go-wkhtmltopdf/wiki/Install-on-Windows)
 
-> Note: `wkhtmltox` does not seem to be actively maintained. Please see
-> the [project status](https://wkhtmltopdf.org/status.html) for more information, recommendations and future plans.
+> Note: `wkhtmltox` does not seem to be actively maintained. Please see the [project status](https://wkhtmltopdf.org/status.html) for more information, recommendations and future plans.
 
 ## Installation
 
