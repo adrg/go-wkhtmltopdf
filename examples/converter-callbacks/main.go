@@ -59,7 +59,7 @@ func main() {
 	}
 	defer outFile.Close()
 
-	if err := converter.Run(outFile); err != nil {
+	if err := converter.Run(outFile); err != nil { // Must be called on the main thread.
 		log.Fatal(err)
 	}
 }

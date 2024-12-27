@@ -172,20 +172,20 @@ type ConverterOpts struct {
 // NewConverterOpts returns a new instance of converter options, configured
 // using sensible defaults.
 //
-//   Defaults options:
+//	Defaults options:
 //
-//   PaperSize:       A4
-//   Orientation:     Portrait
-//   Colorspace:      Color
-//   DPI:             96
-//   Copies:          1
-//   Collate:         true
-//   GenerateOutline: true
-//   UseCompression:  true
-//   MarginLeft:      "10mm"
-//   MarginRight:     "10mm"
-//   ImageDPI:        600
-//   ImageQuality:    100
+//	PaperSize:       A4
+//	Orientation:     Portrait
+//	Colorspace:      Color
+//	DPI:             96
+//	Copies:          1
+//	Collate:         true
+//	GenerateOutline: true
+//	UseCompression:  true
+//	MarginLeft:      "10mm"
+//	MarginRight:     "10mm"
+//	ImageDPI:        600
+//	ImageQuality:    100
 func NewConverterOpts() *ConverterOpts {
 	return &ConverterOpts{
 		PaperSize:       A4,
@@ -283,7 +283,9 @@ func (c *Converter) Add(object *Object) {
 	c.objects = append(c.objects, object)
 }
 
-// Run performs the conversion and copies the output to the provided writer.
+// Run performs the conversion and copies the output to the provided writer. This method must be called on the main
+// thread due to a wkhtmltox limitation. Please see https://go.dev/wiki/LockOSThread or one fo the HTTP examples for
+// more information.
 func (c *Converter) Run(w io.Writer) error {
 	if c.converter == nil {
 		return errors.New("cannot use uninitialized or destroyed converter")

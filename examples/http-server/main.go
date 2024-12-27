@@ -89,7 +89,7 @@ func startServer() {
 			converter.PaperSize = pdf.A4
 
 			// Perform the conversion.
-			return converter.Run(out)
+			return converter.Run(out) // Must be called on the main thread.
 		}); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
