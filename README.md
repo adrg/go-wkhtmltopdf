@@ -44,7 +44,7 @@ Full documentation can be found at https://pkg.go.dev/github.com/adrg/go-wkhtmlt
 * [Configurable web page to PDF conversion server](examples/http-server-advanced)
 
 > Note: The `HTML` to `PDF` conversion (calls to the `Converter.Run` method) must be performed on the main thread.
-> This is a limitation of the wkhtmltox library. Please see the basic `HTTP` server [example](examples/http-server)
+> This is a limitation of the `wkhtmltox` library. Please see the `HTTP` server [example](examples/http-server)
 > for more information.
 
 ## Prerequisites
@@ -161,7 +161,8 @@ See [CONTRIBUTING.MD](CONTRIBUTING.md).
 
 **Contributors**:
 [adrg](https://github.com/adrg),
-[leandrosilva](https://github.com/leandrosilva).
+[leandrosilva](https://github.com/leandrosilva),
+[MicahParks](https://github.com/MicahParks).
 
 ## References
 
