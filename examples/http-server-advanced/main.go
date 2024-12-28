@@ -97,8 +97,9 @@ func startServer() {
 			// Add object to the converter.
 			converter.Add(object)
 
-			// Perform the conversion.
-			return converter.Run(out) // Must be called on the main thread.
+			// Run converter. Due to a limitation of the `wkhtmltox` library,
+			// the conversion must be performed on the main thread.
+			return converter.Run(out)
 		}); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}

@@ -52,14 +52,16 @@ func main() {
 
 	converter.Add(object)
 
-	// Convert objects and save the output PDF document.
+	// Create output file.
 	outFile, err := os.Create("out.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer outFile.Close()
 
-	if err := converter.Run(outFile); err != nil { // Must be called on the main thread.
+	// Run converter. Due to a limitation of the `wkhtmltox` library, the
+	// conversion must be performed on the main thread.
+	if err := converter.Run(outFile); err != nil {
 		log.Fatal(err)
 	}
 }

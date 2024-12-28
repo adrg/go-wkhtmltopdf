@@ -283,9 +283,9 @@ func (c *Converter) Add(object *Object) {
 	c.objects = append(c.objects, object)
 }
 
-// Run performs the conversion and copies the output to the provided writer. This method must be called on the main
-// thread. This is a limitation of the wkhtmltox library. Please see https://go.dev/wiki/LockOSThread or one of the HTTP
-// examples for more information.
+// Run performs the conversion and copies the output to the provided writer.
+// Due to a limitation of the `wkhtmltox` library, this method must be called
+// on the main thread.
 func (c *Converter) Run(w io.Writer) error {
 	if c.converter == nil {
 		return errors.New("cannot use uninitialized or destroyed converter")
