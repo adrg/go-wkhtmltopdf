@@ -284,6 +284,8 @@ func (c *Converter) Add(object *Object) {
 }
 
 // Run performs the conversion and copies the output to the provided writer.
+// Due to a limitation of the `wkhtmltox` library, this method must be called
+// on the main thread.
 func (c *Converter) Run(w io.Writer) error {
 	if c.converter == nil {
 		return errors.New("cannot use uninitialized or destroyed converter")

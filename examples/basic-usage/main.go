@@ -67,14 +67,15 @@ func main() {
 	converter.MarginLeft = "10mm"
 	converter.MarginRight = "10mm"
 
-	// Convert objects and save the output PDF document.
+	// Create output file.
 	outFile, err := os.Create("out.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer outFile.Close()
 
-	// Run converter.
+	// Run converter. Due to a limitation of the `wkhtmltox` library, the
+	// conversion must be performed on the main thread.
 	if err := converter.Run(outFile); err != nil {
 		log.Fatal(err)
 	}

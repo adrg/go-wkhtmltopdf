@@ -43,6 +43,10 @@ Full documentation can be found at https://pkg.go.dev/github.com/adrg/go-wkhtmlt
 * [Basic web page to PDF conversion server](examples/http-server)
 * [Configurable web page to PDF conversion server](examples/http-server-advanced)
 
+> Note: The `HTML` to `PDF` conversion (calls to the `Converter.Run` method) must be performed on the main thread.
+> This is a limitation of the wkhtmltox library. Please see the basic `HTTP` server [example](examples/http-server)
+> for more information.
+
 ## Prerequisites
 
 In order to use the package, `wkhtmltox` must be installed. Installation packages
@@ -129,14 +133,15 @@ func main() {
 	converter.MarginLeft = "10mm"
 	converter.MarginRight = "10mm"
 
-	// Convert objects and save the output PDF document.
+	// Create output file.
 	outFile, err := os.Create("out.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer outFile.Close()
 
-	// Run converter.
+	// Run converter. Due to a limitation of the `wkhtmltox` library, the
+	// conversion must be performed on the main thread.
 	if err := converter.Run(outFile); err != nil {
 		log.Fatal(err)
 	}

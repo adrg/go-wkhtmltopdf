@@ -88,7 +88,8 @@ func startServer() {
 			converter.Title = url
 			converter.PaperSize = pdf.A4
 
-			// Perform the conversion.
+			// Run converter. Due to a limitation of the `wkhtmltox` library,
+			// the conversion must be performed on the main thread.
 			return converter.Run(out)
 		}); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)

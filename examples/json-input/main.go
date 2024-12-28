@@ -67,13 +67,15 @@ func main() {
 	// Add object to the converter.
 	converter.Add(object)
 
-	// Convert object and save the output PDF document.
+	// Create output file.
 	outFile, err := os.Create("out.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer outFile.Close()
 
+	// Run converter. Due to a limitation of the `wkhtmltox` library, the
+	// conversion must be performed on the main thread.
 	if err := converter.Run(outFile); err != nil {
 		log.Fatal(err)
 	}

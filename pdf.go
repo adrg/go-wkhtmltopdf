@@ -3,6 +3,7 @@ Package pdf implements wkhtmltopdf Go bindings. It can be used to convert HTML d
 The package does not use the wkhtmltopdf binary. Instead, it uses the wkhtmltox library directly.
 
 Example
+
 	package main
 
 	import (
@@ -69,13 +70,15 @@ Example
 		converter.MarginLeft = "10mm"
 		converter.MarginRight = "10mm"
 
-		// Convert objects and save the output PDF document.
+		// Create output file.
 		outFile, err := os.Create("out.pdf")
 		if err != nil {
 			log.Fatal(err)
 		}
 		defer outFile.Close()
 
+		// Run converter. Due to a limitation of the `wkhtmltox` library, the
+		// conversion must be performed on the main thread.
 		if err := converter.Run(outFile); err != nil {
 			log.Fatal(err)
 		}
