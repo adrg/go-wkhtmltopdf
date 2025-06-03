@@ -192,34 +192,34 @@ type ObjectOpts struct {
 // NewObjectOpts returns a new instance of object options, configured
 // using sensible defaults.
 //
-//   Defaults options:
+//	Defaults options:
 //
-//   UseExternalLinks:  true
-//   UseLocalLinks:     true
-//   IncludeInOutline:  true
-//   CountPages:        true
-//   JavascriptDelay:   300
-//   Zoom:              1
-//   StopSlowScripts:   true
-//   ErrorAction:       ActionAbort
-//   PrintBackground:   true
-//   LoadImages:        true
-//   EnableJavascript:  true
-//   UseSmartShrinking: true
-//   DefaultEncoding:   "utf-8"
-//   TOC:
-//   	UseDottedLines:       true
-//   	Title:                "Table of Contents"
-//   	GenerateForwardLinks: true
-//   	GenerateBackLinks:    true
-//   	Indentation:          "1em"
-//   	FontScale:            1
-//   Header:
-//   	Font:     "Arial"
-//   	FontSize: 12
-//   Footer:
-//   	Font:     "Arial"
-//   	FontSize: 12
+//	UseExternalLinks:  true
+//	UseLocalLinks:     true
+//	IncludeInOutline:  true
+//	CountPages:        true
+//	JavascriptDelay:   300
+//	Zoom:              1
+//	StopSlowScripts:   true
+//	ErrorAction:       ActionAbort
+//	PrintBackground:   true
+//	LoadImages:        true
+//	EnableJavascript:  true
+//	UseSmartShrinking: true
+//	DefaultEncoding:   "utf-8"
+//	TOC:
+//		UseDottedLines:       true
+//		Title:                "Table of Contents"
+//		GenerateForwardLinks: true
+//		GenerateBackLinks:    true
+//		Indentation:          "1em"
+//		FontScale:            1
+//	Header:
+//		Font:     "Arial"
+//		FontSize: 12
+//	Footer:
+//		Font:     "Arial"
+//		FontSize: 12
 func NewObjectOpts() *ObjectOpts {
 	return &ObjectOpts{
 		UseExternalLinks:  true,
@@ -331,7 +331,7 @@ func newObject(location string, temp bool, opts *ObjectOpts) (*Object, error) {
 func (o *Object) Destroy() {
 	// Remove temporary file.
 	if o.temporary && o.Location != "" {
-		os.Remove(o.Location)
+		os.Remove(o.Location) // nolint:errcheck
 		o.Location, o.temporary = "", false
 	}
 

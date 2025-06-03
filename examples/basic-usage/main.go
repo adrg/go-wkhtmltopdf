@@ -37,7 +37,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer inFile.Close()
+	defer func() {
+		if err := inFile.Close(); err != nil {
+			log.Println(err)
+		}
+	}()
 
 	object3, err := pdf.NewObjectFromReader(inFile)
 	if err != nil {
@@ -72,7 +76,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer outFile.Close()
+	defer func() {
+		if err := outFile.Close(); err != nil {
+			log.Println(err)
+		}
+	}()
 
 	// Run converter. Due to a limitation of the `wkhtmltox` library, the
 	// conversion must be performed on the main thread.

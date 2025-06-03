@@ -57,7 +57,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer outFile.Close()
+	defer func() {
+		if err := outFile.Close(); err != nil {
+			log.Println(err)
+		}
+	}()
 
 	// Run converter. Due to a limitation of the `wkhtmltox` library, the
 	// conversion must be performed on the main thread.
