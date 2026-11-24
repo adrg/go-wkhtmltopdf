@@ -16,9 +16,6 @@
     <a href="https://opensource.org/licenses/MIT" rel="nofollow">
         <img alt="MIT license" src="https://img.shields.io/github/license/adrg/go-wkhtmltopdf"/>
     </a>
-    <a href="https://goreportcard.com/report/github.com/adrg/go-wkhtmltopdf">
-        <img alt="Go report card" src="https://goreportcard.com/badge/github.com/adrg/go-wkhtmltopdf" />
-    </a>
     <a href="https://discord.gg/Jd63kBf">
         <img alt="Discord channel" src="https://img.shields.io/discord/767381740427542588?label=discord" />
     </a>
